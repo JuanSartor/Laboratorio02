@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Laboratorio02</string>
     <string name="main_titulo">Menu de opciones</string>
+    <string name="SeleccionCategoria">Seleccione una categoria</string>
+    <string name="ListaProd">Lista de productos</string>
+    <string name="CantPedir">Cantidad a pedir</string>
+    <string name="BtnAgregar">Agregar</string>
+    <string name="edtProdCantidad">0</string>
 </resources>

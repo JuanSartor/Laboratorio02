@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Laboratorio02</string>
-    <string name="main_titulo">Menu de opciones</string>
+    <string name="mainTitulo">Menu de opciones</string>
+    <string name="nuevo_pedido">Nuevo Pedido</string>
+    <string name="vListaProd">Ver Lista de Productos</string>
+    <string name="vHistorialPedidos">Historial de Pedidos</string>
     <string name="SeleccionCategoria">Seleccione una categoria</string>
     <string name="ListaProd">Lista de productos</string>
     <string name="CantPedir">Cantidad a pedir</string>
@@ -21,4 +24,8 @@
     <string name="ejemploCorreo">aaaa@bbbb.com</string>
     <string name="ejemploDomicilio">aaaa 1234</string>
     <string name="ejemploHora">hh:mm</string>
+    <string name="btnNuevoHistorial">Nuevo</string>
+    <string name="btnMenuHistorial">Menu</string>
+    <string name="txtPedidosHistorial">Pedidos Realizados</string>
+    <string name="btnsCancelarPedidos">Cancelar</string>
 </resources>

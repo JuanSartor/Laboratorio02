@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnNuevoPedido;
@@ -30,7 +33,13 @@ public class MainActivity extends AppCompatActivity {
         btnHistorial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent();
+                Intent i = new Intent(MainActivity.this, historialPedidos.class);
+                PedidoRepository rep=new PedidoRepository();
+
+                //pedidos de prueba
+                rep.guardarPedido(new Pedido(null,null,Pedido.Estado.ACEPTADO,null,null,null));
+                rep.guardarPedido(new Pedido(null,null,Pedido.Estado.ACEPTADO,null,null,null));
+
                 startActivity(i);
             }
         });
@@ -52,8 +61,6 @@ public class MainActivity extends AppCompatActivity {
             if(requestCode==1){
                 int cantidad = Integer.valueOf(data.getExtras().getString("cantidad"));
                 int idProducto = Integer.valueOf(data.getExtras().getString("idProducto"));
-            }
-        }
-
+            }}
     }
 }

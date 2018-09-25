@@ -15,7 +15,6 @@ import android.widget.Spinner;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
-import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class lista_prod extends AppCompatActivity {
     /*Se definen las variables a utilizar*/

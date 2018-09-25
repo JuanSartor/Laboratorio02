@@ -36,15 +36,6 @@ public class historialPedidos extends AppCompatActivity {
 
         listaPedidos.setAdapter(adapterPedido);
 
-        listaPedidos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(historialPedidos.this, NuevoPedido.class);
-                i.putExtra("idPedido",((Pedido)parent.getItemAtPosition(position)).getId());
-                startActivity(i);
-                return true;}
-        });
-
         /*listaPedidos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,6 +1,7 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,6 @@ import android.widget.ArrayAdapter;
 
 import java.util.List;
 
-import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 
 public class pedidoAdapter extends ArrayAdapter<Pedido> {
@@ -35,13 +35,22 @@ public class pedidoAdapter extends ArrayAdapter<Pedido> {
         final Pedido ped = (Pedido) super.getItem(position);
 
         holder.texto1.setText(ped.toString());
-        holder.texto2.setText(" "); //para futuro uso
 
         holder.btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ped.setEstado(Pedido.Estado.CANCELADO);
+                notifyDataSetChanged();
             }
+        });
+
+        holder.texto1.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent i = new Intent(ctx, NuevoPedido.class);
+                i.putExtra("idPedido",ped.getId());
+                ctx.startActivity(i);
+                return false;}
         });
 
         return fila;

@@ -11,7 +11,6 @@ public class pedidoViewHolder {
 
     public pedidoViewHolder(View base){
         this.texto1 = (TextView) base.findViewById(R.id.texto1);
-        this.texto2 = (TextView) base.findViewById(R.id.texto2); //para futuro uso
         this.btnCancelar = (Button) base.findViewById(R.id.btnCancelar);
     }
 }

@@ -1,12 +1,11 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
 
 import java.util.List;
 
@@ -25,29 +24,26 @@ public class productoAdapter extends ArrayAdapter<Producto> {
         this.mSelectedIndex = position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent){
+    @Override @NonNull
+    public View getView(int position, View convertView,@NonNull ViewGroup parent){
         /*INFLATER*/
         LayoutInflater inflater = LayoutInflater.from(this.ctx);
         View fila = convertView;
-        if (fila == null){
+        if (fila == null)
             fila = inflater.inflate(R.layout.product_layout,parent,false);
-        }
         /*VIEWHOLDER*/
         productoViewHolder holder = (productoViewHolder) fila.getTag();
         if (holder == null){
             holder = new productoViewHolder(fila);
             fila.setTag(holder);
         }
-
         Producto prod = (Producto) super.getItem(position);
         holder.nombre.setText(prod.getNombre());
         holder.precio.setText("$("+prod.getPrecio().toString()+")");
-        if (mSelectedIndex == position){
-            holder.seleccion.setChecked(true);
-        }else {
-            holder.seleccion.setChecked(false);
-        }
-
+        if (mSelectedIndex == position)
+          holder.seleccion.setChecked(true);
+        else
+          holder.seleccion.setChecked(false);
         return fila;
     }
 }

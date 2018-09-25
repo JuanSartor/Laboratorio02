@@ -1,5 +1,6 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,8 +40,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, lista_prod.class);
-                startActivity(i);
+                i.putExtra("NUEVO_PEDIDO",0);
+                startActivityForResult(i,0);
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( resultCode== Activity.RESULT_OK){
+            if(requestCode==1){
+                int cantidad = Integer.valueOf(data.getExtras().getString("cantidad"));
+                int idProducto = Integer.valueOf(data.getExtras().getString("idProducto"));
+            }
+        }
+
     }
 }

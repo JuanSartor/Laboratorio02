@@ -71,7 +71,6 @@ public class lista_prod extends AppCompatActivity {
                 }
                 );
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });

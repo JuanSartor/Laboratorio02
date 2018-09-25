@@ -36,7 +36,8 @@
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/radioGroup">
 
         <RadioButton
             android:id="@+id/radioButton"
@@ -64,7 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="@string/ejemploDomicilio"
+        android:text="nnn 0000"
         android:inputType="none" />
 
     <TextView
@@ -83,7 +84,7 @@
 
     <ListView
         android:layout_width="wrap_content"
-        android:layout_height="192dp" />
+        android:layout_height="76dp" />
 
     <LinearLayout
         android:layout_width="match_parent"

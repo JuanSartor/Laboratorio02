@@ -21,28 +21,26 @@ public class pedidoAdapter extends ArrayAdapter<Pedido> {
     }
 
     @Override @NonNull
-    public View getView(int position, View convertView,@NonNull ViewGroup parent){
+    public View getView(int position, View convertView,@NonNull ViewGroup parent) {
         /*INFLATER*/
         LayoutInflater inflater = LayoutInflater.from(this.ctx);
         View fila = convertView;
         if (fila == null)
-            fila = inflater.inflate(R.layout.pedido_layout,parent,false);
+            fila = inflater.inflate(R.layout.pedido_layout, parent, false);
         /*VIEWHOLDER*/
         pedidoViewHolder holder = (pedidoViewHolder) fila.getTag();
-        if (holder == null){
+        if (holder == null) {
             holder = new pedidoViewHolder(fila);
             fila.setTag(holder);}
         final Pedido ped = (Pedido) super.getItem(position);
 
-        holder.texto1.setText(ped.toString());
+        holder.texto1.setText("Fecha: "+ped.getFecha()+" Estado: "+ped.getEstado()+ " Detalle: "+ped.getDetalle());
 
         holder.btnCancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ped.setEstado(Pedido.Estado.CANCELADO);
-                notifyDataSetChanged();
-            }
-        });
+                notifyDataSetChanged();}});
 
         holder.texto1.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -50,8 +48,7 @@ public class pedidoAdapter extends ArrayAdapter<Pedido> {
                 Intent i = new Intent(ctx, NuevoPedido.class);
                 i.putExtra("idPedido",ped.getId());
                 ctx.startActivity(i);
-                return false;}
-        });
+                return false;}});
 
         return fila;
     }

@@ -9,7 +9,7 @@ public class productoViewHolder {
     TextView precio;
     RadioButton seleccion;
 
-    productoViewHolder(View base){
+    public productoViewHolder(View base){
         this.nombre = (TextView) base.findViewById(R.id.tvNombre);
         this.precio = (TextView) base.findViewById(R.id.tvPrecio);
         this.seleccion = (RadioButton) base.findViewById(R.id.rbProducto);

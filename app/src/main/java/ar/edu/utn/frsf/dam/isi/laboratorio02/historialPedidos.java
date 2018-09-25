@@ -47,18 +47,18 @@ public class historialPedidos extends AppCompatActivity {
 
         /*listaPedidos.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(View v) {
+            public void onClick(View v) {
                 adapterPedido.clear();
                 adapterPedido.addAll(repositorio.getLista());
                 adapterPedido.notifyDataSetChanged();
-                }
+            }
         });*/
 
         btnHistorialMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                }
+            }
         });
     }
 }

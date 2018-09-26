@@ -20,6 +20,7 @@ public class historialPedidos extends AppCompatActivity {
     private pedidoAdapter adapterPedido;
 
     public Button btnHistorialMenu;
+    public Button btnHistorialNuevo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,7 @@ public class historialPedidos extends AppCompatActivity {
         repositorio = new PedidoRepository();
 
         btnHistorialMenu = findViewById(R.id.btnHistorialMenu);
+        btnHistorialNuevo = findViewById(R.id.btnHistorialNuevo);
         listaPedidos = findViewById(R.id.lstHistorialPedidos);
 
         adapterPedido = new pedidoAdapter(context, repositorio.getLista());
@@ -40,6 +42,14 @@ public class historialPedidos extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        btnHistorialNuevo.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(historialPedidos.this, NuevoPedido.class);
+                startActivity(i);
             }
         });
     }

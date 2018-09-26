@@ -27,5 +27,10 @@
     <string name="btnNuevoHistorial">Nuevo</string>
     <string name="btnMenuHistorial">Menu</string>
     <string name="txtPedidosHistorial">Pedidos Realizados</string>
-    <string name="btnsCancelarPedidos">Cancelar</string>
+    <string name="mailFilaHistorial">Mail: </string>
+    <string name="fyhFilaHistorial">Fecha y hora: </string>
+    <string name="cantidadFilaHistorial">Cantidad items: </string>
+    <string name="costoFilaHistorial">Costo: </string>
+    <string name="estadoFilaHistorial">Estado: </string>
+    <string name="btnCancelarPedidos">Cancelar</string>
 </resources>

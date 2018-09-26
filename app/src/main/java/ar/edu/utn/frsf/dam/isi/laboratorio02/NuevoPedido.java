@@ -33,15 +33,10 @@ public class NuevoPedido extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId== R.id.radioButton){
-
                     direccion.setEnabled(false);
-
                 }
                 else{
-
                     direccion.setEnabled(true);
-
-
                 }
             }
         });

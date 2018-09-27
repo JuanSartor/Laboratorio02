@@ -1,6 +1,8 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import java.util.List;
+
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 
 import android.support.annotation.NonNull;
@@ -26,6 +28,13 @@ public class detallePedidoAdapter extends ArrayAdapter<PedidoDetalle> {
 
     public List<PedidoDetalle> getDetallePedido(){
         return this.detalle;
+    }
+
+    public PedidoDetalle getSeleccionado(){
+        if(mSelectedIndex!=-1)
+            return detalle.get(mSelectedIndex);
+        else
+            return null;
     }
 
     @Override
@@ -62,9 +71,6 @@ public class detallePedidoAdapter extends ArrayAdapter<PedidoDetalle> {
             }
         });
         return fila;
-
     }
-
-
 
 }

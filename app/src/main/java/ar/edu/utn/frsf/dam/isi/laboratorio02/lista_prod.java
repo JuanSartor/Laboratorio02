@@ -78,8 +78,8 @@ public class lista_prod extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent salida = new Intent();
-                salida.putExtra("cantidad", edtProdCant.getText());
-                salida.putExtra("idProducto",listaProductos.getSelectedItemId());
+                salida.putExtra("cantidad", Integer.parseInt(edtProdCant.getText().toString()));
+                salida.putExtra("idProducto",adapterProducto.getProductoSeleccionado().getId());
                 setResult(Activity.RESULT_OK, salida);
                 finish();
             }

@@ -43,6 +43,7 @@ public class NuevoPedido extends AppCompatActivity {
     private Button btnPedidoHacerPedido;
     private Button btnPedidoVolver;
     private TextView lblTotalPedido;
+    private detallePedidoAdapter adaptador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +97,7 @@ public class NuevoPedido extends AppCompatActivity {
         else{
             unPedido= new Pedido();}
 
-        final detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
+        adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
         listaDetalles.setAdapter(adaptador);
 
         radiogrupo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -111,7 +112,7 @@ public class NuevoPedido extends AppCompatActivity {
         btnPedidoQuitarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: codigo que quita el producto de la lista (del pedido)
+                unPedido.quitarDetalle(adaptador.getSeleccionado());
             }
         });
 
@@ -139,34 +140,30 @@ public class NuevoPedido extends AppCompatActivity {
             }
         });
 
-
         btnPedidoVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-            }
+                finish();}
         });
-
-        // boton para agregar productos al pedido
 
         btnPedidoAddProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(NuevoPedido.this, lista_prod.class);
-                // me falta referenciar y tomar el producto que selecciona, luego agregarlo a la lista del detalle y visualisarlo
                 i.putExtra("NUEVO_PEDIDO",1);
-                startActivityForResult(i,1);
-            }
+                startActivityForResult(i,1);}
         });}
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if( resultCode== Activity.RESULT_OK){
             if(requestCode==1){
-                int cantidad = Integer.valueOf(data.getExtras().getString("cantidad"));
-                int idProducto = Integer.valueOf(data.getExtras().getString("idProducto"));
-                //TODO: continuar con lo que se haria con estos datos que se obtienen de la lista de productos, crear el detalle pedido, el pedido, etc.
+                int cantidad = Integer.valueOf(data.getExtras().getInt("cantidad"));
+                int idProducto = Integer.valueOf(data.getExtras().getInt("idProducto"));
+
+                PedidoDetalle pedDet = new PedidoDetalle(cantidad,repositorioProducto.buscarPorId(idProducto));
+                pedDet.setPedido(unPedido);
+                adaptador.notifyDataSetChanged();
             }}
     }
 }

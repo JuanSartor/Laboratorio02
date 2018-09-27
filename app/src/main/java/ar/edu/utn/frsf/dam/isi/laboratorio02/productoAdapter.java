@@ -14,14 +14,20 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 public class productoAdapter extends ArrayAdapter<Producto> {
     private Context ctx;
     private int mSelectedIndex = -1;
+    private List<Producto> datos;
 
     public productoAdapter(Context act, List<Producto> productos){
         super(act,0,productos);
         this.ctx=act;
+        this.datos=productos;
     }
 
     public void setSelectedIndex(int position){
         this.mSelectedIndex = position;
+    }
+
+    public Producto getProductoSeleccionado(){
+        return datos.get(mSelectedIndex);
     }
 
     @Override @NonNull

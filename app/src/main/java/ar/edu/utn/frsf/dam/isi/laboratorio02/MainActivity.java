@@ -89,12 +89,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
+/*    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if( resultCode== Activity.RESULT_OK){
             if(requestCode==1){
                 int cantidad = Integer.valueOf(data.getExtras().getString("cantidad"));
                 int idProducto = Integer.valueOf(data.getExtras().getString("idProducto"));
             }}
-    }
+    }*/
 }

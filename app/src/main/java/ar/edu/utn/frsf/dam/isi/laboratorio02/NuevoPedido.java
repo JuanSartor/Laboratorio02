@@ -1,8 +1,12 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -10,10 +14,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
@@ -32,7 +33,7 @@ public class NuevoPedido extends AppCompatActivity {
     private EditText direccion;
     private EditText edtPedidoHoraEntrega;
     private EditText direccionCorreo;
-    private ListView lstPedidoItems;
+    private ListView listaDetalles;
     private Button btnPedidoAddProducto;
     private Button btnPedidoQuitarProducto;
     private Button btnPedidoHacerPedido;
@@ -44,32 +45,31 @@ public class NuevoPedido extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_pedido);
 
-        /*Se inicializan las variables*/
-
+        //*Se inicializan las variables*//*
         repositorioPedido= new PedidoRepository();
         repositorioProducto= new ProductoRepository();
         radiogrupo= (RadioGroup) findViewById(R.id.optPedidoModoEntrega);
         direccion=(EditText) findViewById(R.id.edtPedidoDireccion);
 
-        detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
         //inicializacion de variables para los otros widgets
         direccionCorreo=(EditText) findViewById(R.id.edtPedidoCorreo);
         optPedidoRetira = (RadioButton) findViewById(R.id.optPedidoRetira);
         optPedidoEnviar = (RadioButton) findViewById(R.id.optPedidoEnviar);
         edtPedidoHoraEntrega = (EditText) findViewById(R.id.edtPedidoHoraEntrega);
-        lstPedidoItems = (ListView) findViewById(R.id.lstPedidoItems);
+        listaDetalles = (ListView) findViewById(R.id.lstPedidoItems);
         btnPedidoAddProducto = (Button) findViewById(R.id.btnPedidoAddProducto);
         btnPedidoQuitarProducto = (Button) findViewById(R.id.btnPedidoQuitarProducto);
         lblTotalPedido = (TextView) findViewById(R.id.lblTotalPedido);
         btnPedidoHacerPedido = (Button) findViewById(R.id.btnPedidoHacerPedido);
         btnPedidoVolver = (Button) findViewById(R.id.btnPedidoVolver);
 
-        //Este if/else es por si se llama desde el menu principal
-        // (origen =0) o desde la ventana historial pedidos (origen =1),
-        // si es el ultimo caso entonces debe completar la ventana con los datos del pedido que viene con el intent.
         final Intent intentExtras = getIntent();
 
-        if (intentExtras.getExtras().getInt("origen")==1){
+        //Este if/else es por si se llama desde el menu principal
+        // o desde la ventana historial pedidos. Si es el ultimo caso,
+        // se debe completar la ventana con los datos del pedido que viene con el intent.
+
+        if (intentExtras.getExtras()!=null){
             unPedido=repositorioPedido.buscarPorId(intentExtras.getExtras().getInt("idPedido"));
 
             //seteo de campos de acuerdo al pedido
@@ -81,40 +81,73 @@ public class NuevoPedido extends AppCompatActivity {
                 optPedidoEnviar.setChecked(true);
             direccion.setText(unPedido.getDireccionEnvio());
 
-            //edtPedidoHoraEntrega.setText(unPedido.getFecha().toString()); //TODO:NO anda esto
-
-            //lstPedidoItems    //TODO: setear esta lista con el adaptador
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            edtPedidoHoraEntrega.setText(sdf.format(unPedido.getFecha()));
 
             double costoTotal=0;
-            int temp,cantTotal=0;
+            int temp;
             for (PedidoDetalle pd: unPedido.getDetalle()) {
                 temp= pd.getCantidad();
-                costoTotal = costoTotal + (pd.getProducto().getPrecio())*(temp);
-                cantTotal = cantTotal + temp; }
-            lblTotalPedido.setText(getString(R.string.totalPedido)+String.valueOf(cantTotal));
+                costoTotal = costoTotal + (pd.getProducto().getPrecio())*(temp);}
+            lblTotalPedido.setText(getString(R.string.totalPedido)+String.valueOf(costoTotal));
+
+            btnPedidoAddProducto.setEnabled(false);     //se deshabilitan estos botones porque el enunciado no dice
+            btnPedidoQuitarProducto.setEnabled(false);  // nada de que se puedan modificar los pedidos desde el
+            btnPedidoHacerPedido.setEnabled(false);     // historial, se debe cancelar el pedido y hacer otro.
         }
         else{
-            unPedido= new Pedido();
-        }
+            unPedido= new Pedido();}
 
-        radiogrupo= (RadioGroup) findViewById(R.id.radioGroup);
-        direccion=(EditText) findViewById(R.id.editText2);
-        detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
+        final detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
+        listaDetalles.setAdapter(adaptador);
 
         radiogrupo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId== R.id.optPedidoEnviar){
-                    direccion.setEnabled(false);
-                }
+                    direccion.setEnabled(false);}
                 else{
-                    direccion.setEnabled(true);
-                }
+                    direccion.setEnabled(true);}}
+        });
+
+        btnPedidoAddProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(NuevoPedido.this, lista_prod.class);
+                i.putExtra("NUEVO_PEDIDO",1);
+                startActivityForResult(i,1);
             }
         });
 
+        btnPedidoQuitarProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: codigo que quita el producto de la lista (del pedido)
+            }
+        });
 
-        listaDetalles= (ListView) findViewById(R.id.lst_detalles);
+        btnPedidoHacerPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: codigo de armar efectivamente el pedido y agregarlo a la clase repositorio producto.
+            }
+        });
 
+        btnPedidoVolver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();   //TODO: no se si esto termina asi nomas, creo que si
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if( resultCode== Activity.RESULT_OK){
+            if(requestCode==1){
+                int cantidad = Integer.valueOf(data.getExtras().getString("cantidad"));
+                int idProducto = Integer.valueOf(data.getExtras().getString("idProducto"));
+                //TODO: continuar con lo que se haria con estos datos que se obtienen de la lista de productos, crear el detalle pedido, el pedido, etc.
+            }}
     }
 }

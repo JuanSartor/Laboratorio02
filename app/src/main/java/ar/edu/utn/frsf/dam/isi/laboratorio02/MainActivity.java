@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, historialPedidos.class);
                 PedidoRepository rep=new PedidoRepository();
 
-                //DATOS DE PRUEBA/////////////////////////////////////////////
+                //DATOS DE PRUEBA///////////////////////////////////////////// //TODO: quitar estos datos de prueba
                 //productos de prueba para armar "pedidos detalle"
                 Producto p1 = new Producto("perro",14.3,new Categoria("perros"));
                 Producto p2 = new Producto("carpincho",107.3,new Categoria("fauna"));
@@ -52,16 +55,23 @@ public class MainActivity extends AppCompatActivity {
                 PedidoDetalle pedDet= new PedidoDetalle(4,p1);
                 PedidoDetalle pedDet2= new PedidoDetalle(10,p2);
                 PedidoDetalle pedDet3= new PedidoDetalle(10,p3);
+                PedidoDetalle pedDet4= new PedidoDetalle(10,p1);
                 //lista de "pedidos detalle" de prueba para armar pedidos
                 List<PedidoDetalle> listaPedDet = new ArrayList<>();
                 List<PedidoDetalle> listaPedDet2 = new ArrayList<>();
                 listaPedDet.add(pedDet);
                 listaPedDet.add(pedDet2);
+                listaPedDet.add(pedDet4);
                 listaPedDet2.add(pedDet3);
-                //pedidos de prueba
-                rep.guardarPedido(new Pedido(null,listaPedDet,Pedido.Estado.RECHAZADO,null,"david_h.94@hotmail.com",true));
-                rep.guardarPedido(new Pedido(null,listaPedDet,Pedido.Estado.ACEPTADO,null,"david_h.94@hotmail.com",false));
-                rep.guardarPedido(new Pedido(null,listaPedDet2,Pedido.Estado.EN_PREPARACION,null,"david.harispe@gmail.com",true));
+                //pedidos de prueba, el try/catch es por la fecha, lo exige aunque no fallaria nunca
+                try {
+                    Date dTime = new SimpleDateFormat("HH:mm").parse("13:10");
+                    rep.guardarPedido(new Pedido(dTime,listaPedDet,Pedido.Estado.RECHAZADO,null,"david_h.94@hotmail.com",true));
+                    rep.guardarPedido(new Pedido(dTime,listaPedDet,Pedido.Estado.ACEPTADO,"el molino 1257","david_h.94@hotmail.com",false));
+                    rep.guardarPedido(new Pedido(dTime,listaPedDet2,Pedido.Estado.EN_PREPARACION,null,"david.harispe@gmail.com",true));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 //////////////////////////////////////////////////////////////
 
                 startActivity(i);
@@ -74,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, lista_prod.class);
                 i.putExtra("NUEVO_PEDIDO",0);
-                startActivityForResult(i,0);    //TODO: de donde mas era que se podia llamar que llevaba al onActivityResult de abajo?
+                startActivityForResult(i,0);
             }
         });
     }

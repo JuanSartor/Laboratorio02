@@ -85,8 +85,7 @@
     <ListView
         android:id="@+id/lstPedidoItems"
         android:layout_width="wrap_content"
-        android:layout_height="76dp"
-        android:id="@+id/lst_detalles"/>
+        android:layout_height="106dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -113,7 +112,7 @@
     <TextView
         android:id="@+id/lblTotalPedido"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="22dp"
         android:text="@string/textoTotal" />
 
     <LinearLayout

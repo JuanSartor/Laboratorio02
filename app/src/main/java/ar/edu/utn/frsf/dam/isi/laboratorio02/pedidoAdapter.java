@@ -106,6 +106,16 @@ public class pedidoAdapter extends ArrayAdapter<Pedido> {
             }
         });
 
+        holder.btnDetallePedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(ctx, NuevoPedido.class);
+                i.putExtra("origen",1);
+                i.putExtra("idPedido",ped.getId());
+                ctx.startActivity(i);
+            }
+        });
+
         holder.layoutAgrupador.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -113,7 +123,6 @@ public class pedidoAdapter extends ArrayAdapter<Pedido> {
                 i.putExtra("idPedido",ped.getId());
                 ctx.startActivity(i);
                 return false;}});
-
         return fila;
     }
 }

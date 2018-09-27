@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this,NuevoPedido.class);
+                i.putExtra("origen",0);
                 startActivity(i);
             }
         });
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, lista_prod.class);
                 i.putExtra("NUEVO_PEDIDO",0);
-                startActivityForResult(i,0);
+                startActivityForResult(i,0);    //TODO: de donde mas era que se podia llamar que llevaba al onActivityResult de abajo?
             }
         });
     }

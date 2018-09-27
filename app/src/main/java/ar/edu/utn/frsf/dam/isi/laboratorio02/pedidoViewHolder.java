@@ -16,6 +16,7 @@ public class pedidoViewHolder {
     public TextView txtEstado;
     public ImageView imagenRetira;
     public Button btnCancelarPedido;
+    public Button btnDetallePedido;
     public LinearLayout layoutAgrupador;
 
 
@@ -27,6 +28,7 @@ public class pedidoViewHolder {
         this.txtEstado = (TextView) base.findViewById(R.id.txtEstado);
         this.imagenRetira = (ImageView) base.findViewById(R.id.imagenRetira);
         this.btnCancelarPedido = (Button) base.findViewById(R.id.btnCancelarPedido);
+        this.btnDetallePedido = (Button) base.findViewById(R.id.btnDetallePedido);
         this.layoutAgrupador = (LinearLayout) base.findViewById(R.id.layoutAgrupador);
     }
 }

@@ -33,6 +33,8 @@
     <string name="costoFilaHistorial">Costo: </string>
     <string name="estadoFilaHistorial">Estado: </string>
     <string name="btnCancelarPedidos">Cancelar</string>
+    <string name="btnDetallePedidos">Ver Detalle</string>
     <string name="tv_producto">Producto</string>
     <string name="tv_cant_producto">Cantidad del prodcuto</string>
+    <string name="totalPedido">Total del pedido: $</string>
 </resources>

@@ -66,13 +66,13 @@ public class NuevoPedido extends AppCompatActivity {
         btnPedidoVolver = (Button) findViewById(R.id.btnPedidoVolver);
         listaDetalles= (ListView) findViewById(R.id.lst_detalles);
 
-        final Intent intentExtras = getIntent();
+        final Bundle intentExtras = getIntent().getExtras();
         //Este if/else es por si se llama desde el menu principal
         // o desde la ventana historial pedidos. Si es el ultimo caso,
         // se debe completar la ventana con los datos del pedido que viene con el intent.
 
-        if (intentExtras.getExtras()!=null){
-            unPedido=repositorioPedido.buscarPorId(intentExtras.getExtras().getInt("idPedido"));
+        if (intentExtras.getInt("origen")==1){
+            unPedido=repositorioPedido.buscarPorId(intentExtras.getInt("idPedido"));
 
             //seteo de campos de acuerdo al pedido
 

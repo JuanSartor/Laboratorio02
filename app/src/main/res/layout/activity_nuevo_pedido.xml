@@ -82,10 +82,19 @@
         android:hint="@string/ejemploHora"
         android:inputType="time" />
 
-    <ListView
+   <!-- <ListView
         android:id="@+id/lstPedidoItems"
         android:layout_width="wrap_content"
         android:layout_height="106dp" />
+
+        lo comente porque genera error por el id(tiene 2 id)
+        abajo lo hice como lst_detalles
+        -->
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="76dp"
+        android:id="@+id/lst_detalles"/>
 
     <LinearLayout
         android:layout_width="match_parent"

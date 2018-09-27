@@ -6,7 +6,9 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View;
 import android.widget.AdapterView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -39,6 +41,8 @@ public class NuevoPedido extends AppCompatActivity {
     private Button btnPedidoHacerPedido;
     private Button btnPedidoVolver;
     private TextView lblTotalPedido;
+    private detallePedidoAdapter adaptador;
+    private ListView listaDetalles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +61,15 @@ public class NuevoPedido extends AppCompatActivity {
         optPedidoEnviar = (RadioButton) findViewById(R.id.optPedidoEnviar);
         edtPedidoHoraEntrega = (EditText) findViewById(R.id.edtPedidoHoraEntrega);
         listaDetalles = (ListView) findViewById(R.id.lstPedidoItems);
+        //lstPedidoItems = (ListView) findViewById(R.id.lstPedidoItems);  lo comente para probar
         btnPedidoAddProducto = (Button) findViewById(R.id.btnPedidoAddProducto);
         btnPedidoQuitarProducto = (Button) findViewById(R.id.btnPedidoQuitarProducto);
         lblTotalPedido = (TextView) findViewById(R.id.lblTotalPedido);
         btnPedidoHacerPedido = (Button) findViewById(R.id.btnPedidoHacerPedido);
         btnPedidoVolver = (Button) findViewById(R.id.btnPedidoVolver);
+        listaDetalles= (ListView) findViewById(R.id.lst_detalles);
 
         final Intent intentExtras = getIntent();
-
         //Este if/else es por si se llama desde el menu principal
         // o desde la ventana historial pedidos. Si es el ultimo caso,
         // se debe completar la ventana con los datos del pedido que viene con el intent.
@@ -100,6 +105,8 @@ public class NuevoPedido extends AppCompatActivity {
 
         final detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
         listaDetalles.setAdapter(adaptador);
+        // radiogrupo= (RadioGroup) findViewById(R.id.radioGroup); lo comente par probar
+        // direccion=(EditText) findViewById(R.id.editText2); lo comente para probar
 
         radiogrupo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -133,13 +140,32 @@ public class NuevoPedido extends AppCompatActivity {
             }
         });
 
+
+        detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
+
+        listaDetalles.setAdapter(adaptador);
+
         btnPedidoVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();   //TODO: no se si esto termina asi nomas, creo que si
             }
         });
-    }
+
+        // boton para agregar productos al pedido
+
+        btnPedidoAddProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(NuevoPedido.this, lista_prod.class);
+// me falta referenciar y tomar el producto que selecciona, luego agregarlo a la lista del detalle y visualisarlo
+
+
+
+            }
+        });
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

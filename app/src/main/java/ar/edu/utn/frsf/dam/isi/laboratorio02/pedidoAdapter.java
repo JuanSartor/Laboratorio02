@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
@@ -50,7 +51,10 @@ public class pedidoAdapter extends ArrayAdapter<Pedido> {
             cantTotal = cantTotal + temp; }
 
         holder.txtMail.setText(ctx.getString(R.string.mailFilaHistorial)+" "+ped.getMailContacto());
-        holder.txtFechayHora.setText(ctx.getString(R.string.fyhFilaHistorial)+" "+"0");        //TODO: ver el tema de esta fecha
+
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        holder.txtFechayHora.setText(ctx.getString(R.string.fyhFilaHistorial)+" "+sdf.format(ped.getFecha()));
+        
         holder.txtCosto.setText(ctx.getString(R.string.costoFilaHistorial)+" $"+String.valueOf(costoTotal));
         holder.txtCantidad.setText(ctx.getString(R.string.cantidadFilaHistorial)+" "+Integer.toString(cantTotal));
 

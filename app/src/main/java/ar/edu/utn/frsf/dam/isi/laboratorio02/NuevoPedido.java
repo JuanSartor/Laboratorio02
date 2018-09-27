@@ -156,8 +156,6 @@ public class NuevoPedido extends AppCompatActivity {
                 // me falta referenciar y tomar el producto que selecciona, luego agregarlo a la lista del detalle y visualisarlo
                 i.putExtra("NUEVO_PEDIDO",1);
                 startActivityForResult(i,1);
-
-                //TODO: sumar el precio al total en variable de nuevopedido precioPedido
             }
         });}
 

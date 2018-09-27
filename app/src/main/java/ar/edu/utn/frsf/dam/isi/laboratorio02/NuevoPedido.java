@@ -3,6 +3,7 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -38,6 +39,8 @@ public class NuevoPedido extends AppCompatActivity {
     private Button btnPedidoHacerPedido;
     private Button btnPedidoVolver;
     private TextView lblTotalPedido;
+    private detallePedidoAdapter adaptador;
+    private ListView listaDetalles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +54,18 @@ public class NuevoPedido extends AppCompatActivity {
         radiogrupo= (RadioGroup) findViewById(R.id.optPedidoModoEntrega);
         direccion=(EditText) findViewById(R.id.edtPedidoDireccion);
 
-        detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
         //inicializacion de variables para los otros widgets
         direccionCorreo=(EditText) findViewById(R.id.edtPedidoCorreo);
         optPedidoRetira = (RadioButton) findViewById(R.id.optPedidoRetira);
         optPedidoEnviar = (RadioButton) findViewById(R.id.optPedidoEnviar);
         edtPedidoHoraEntrega = (EditText) findViewById(R.id.edtPedidoHoraEntrega);
-        lstPedidoItems = (ListView) findViewById(R.id.lstPedidoItems);
+        //lstPedidoItems = (ListView) findViewById(R.id.lstPedidoItems);  lo comente para probar
         btnPedidoAddProducto = (Button) findViewById(R.id.btnPedidoAddProducto);
         btnPedidoQuitarProducto = (Button) findViewById(R.id.btnPedidoQuitarProducto);
         lblTotalPedido = (TextView) findViewById(R.id.lblTotalPedido);
         btnPedidoHacerPedido = (Button) findViewById(R.id.btnPedidoHacerPedido);
         btnPedidoVolver = (Button) findViewById(R.id.btnPedidoVolver);
+        listaDetalles= (ListView) findViewById(R.id.lst_detalles);
 
         //Este if/else es por si se llama desde el menu principal
         // (origen =0) o desde la ventana historial pedidos (origen =1),
@@ -97,9 +100,8 @@ public class NuevoPedido extends AppCompatActivity {
             unPedido= new Pedido();
         }
 
-        radiogrupo= (RadioGroup) findViewById(R.id.radioGroup);
-        direccion=(EditText) findViewById(R.id.editText2);
-        detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
+        // radiogrupo= (RadioGroup) findViewById(R.id.radioGroup); lo comente par probar
+        // direccion=(EditText) findViewById(R.id.editText2); lo comente para probar
 
         radiogrupo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -114,7 +116,27 @@ public class NuevoPedido extends AppCompatActivity {
         });
 
 
-        listaDetalles= (ListView) findViewById(R.id.lst_detalles);
+
+        detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
+
+        listaDetalles.setAdapter(adaptador);
+
+
+
+        // boton para agregar productos al pedido
+
+        btnPedidoAddProducto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(NuevoPedido.this, lista_prod.class);
+// me falta referenciar y tomar el producto que selecciona, luego agregarlo a la lista del detalle y visualisarlo
+
+
+
+            }
+        });
+
 
     }
 }

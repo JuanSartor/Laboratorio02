@@ -85,7 +85,8 @@
     <ListView
         android:id="@+id/lstPedidoItems"
         android:layout_width="wrap_content"
-        android:layout_height="76dp" />
+        android:layout_height="76dp"
+        android:id="@+id/lst_detalles"/>
 
     <LinearLayout
         android:layout_width="match_parent"

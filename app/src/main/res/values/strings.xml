@@ -36,5 +36,7 @@
     <string name="btnDetallePedidos">Ver Detalle</string>
     <string name="tv_producto">Producto</string>
     <string name="tv_cant_producto">Cantidad del prodcuto</string>
+    <string name="rdb_detallePedido"></string>
+
     <string name="totalPedido">Total del pedido: $</string>
 </resources>

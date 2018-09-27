@@ -51,6 +51,7 @@ public class NuevoPedido extends AppCompatActivity {
         radiogrupo= (RadioGroup) findViewById(R.id.optPedidoModoEntrega);
         direccion=(EditText) findViewById(R.id.edtPedidoDireccion);
 
+        detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
         //inicializacion de variables para los otros widgets
         direccionCorreo=(EditText) findViewById(R.id.edtPedidoCorreo);
         optPedidoRetira = (RadioButton) findViewById(R.id.optPedidoRetira);
@@ -96,6 +97,9 @@ public class NuevoPedido extends AppCompatActivity {
             unPedido= new Pedido();
         }
 
+        radiogrupo= (RadioGroup) findViewById(R.id.radioGroup);
+        direccion=(EditText) findViewById(R.id.editText2);
+        detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
 
         radiogrupo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -109,6 +113,8 @@ public class NuevoPedido extends AppCompatActivity {
             }
         });
 
+
+        listaDetalles= (ListView) findViewById(R.id.lst_detalles);
 
     }
 }

@@ -24,6 +24,10 @@ public class detallePedidoAdapter extends ArrayAdapter<PedidoDetalle> {
         this.detalle=pedido_detalle;
     }
 
+    public List<PedidoDetalle> getDetallePedido(){
+        return this.detalle;
+    }
+
     @Override
     public View getView(final int position, View convertView, @NonNull ViewGroup parent){
 

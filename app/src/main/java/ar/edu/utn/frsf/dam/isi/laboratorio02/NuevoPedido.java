@@ -16,7 +16,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
@@ -41,7 +43,6 @@ public class NuevoPedido extends AppCompatActivity {
     private Button btnPedidoHacerPedido;
     private Button btnPedidoVolver;
     private TextView lblTotalPedido;
-    private detallePedidoAdapter adaptador;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +87,7 @@ public class NuevoPedido extends AppCompatActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
             edtPedidoHoraEntrega.setText(sdf.format(unPedido.getFecha()));
 
-            double costoTotal=0;
-            int temp;
-            for (PedidoDetalle pd: unPedido.getDetalle()) {
-                temp= pd.getCantidad();
-                costoTotal = costoTotal + (pd.getProducto().getPrecio())*(temp);}
-            lblTotalPedido.setText(getString(R.string.totalPedido)+String.valueOf(costoTotal));
+            lblTotalPedido.setText(getString(R.string.totalPedido)+String.valueOf(unPedido.total()));
 
             btnPedidoAddProducto.setEnabled(false);     //se deshabilitan estos botones porque el enunciado no dice
             btnPedidoQuitarProducto.setEnabled(false);  // nada de que se puedan modificar los pedidos desde el
@@ -122,7 +118,24 @@ public class NuevoPedido extends AppCompatActivity {
         btnPedidoHacerPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: codigo de armar efectivamente el pedido y agregarlo a la clase repositorio producto.
+
+                unPedido.setEstado(Pedido.Estado.REALIZADO);
+                unPedido.setDetalle(adaptador.getDetallePedido()); //le pide el detalle de lo que muestra actualmente el adaptador
+                unPedido.setDireccionEnvio(direccion.getText().toString());
+                unPedido.setMailContacto(direccionCorreo.getText().toString());
+
+                String hora= edtPedidoHoraEntrega.getText().toString();
+                try {
+                    Date dTime = new SimpleDateFormat("HH:mm").parse(hora);
+                    unPedido.setFecha(dTime);
+                } catch (ParseException e) {                                            //TODO: esto podria dar error en algun momento con hora mal ingresada
+                    e.printStackTrace();}
+
+                if(optPedidoEnviar.isChecked())
+                    unPedido.setRetirar(false);
+                else
+                    unPedido.setRetirar(true);
+                repositorioPedido.guardarPedido(unPedido);  //esto lo agrega al repositorio y le setea el id
             }
         });
 
@@ -130,7 +143,7 @@ public class NuevoPedido extends AppCompatActivity {
         btnPedidoVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();   //TODO: no se si esto termina asi nomas, creo que si
+                finish();
             }
         });
 
@@ -143,6 +156,8 @@ public class NuevoPedido extends AppCompatActivity {
                 // me falta referenciar y tomar el producto que selecciona, luego agregarlo a la lista del detalle y visualisarlo
                 i.putExtra("NUEVO_PEDIDO",1);
                 startActivityForResult(i,1);
+
+                //TODO: sumar el precio al total en variable de nuevopedido precioPedido
             }
         });}
 

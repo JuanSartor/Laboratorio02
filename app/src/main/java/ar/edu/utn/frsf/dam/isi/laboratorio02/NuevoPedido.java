@@ -104,9 +104,9 @@ public class NuevoPedido extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId== R.id.optPedidoEnviar){
-                    direccion.setEnabled(false);}
+                    direccion.setEnabled(true);}
                 else{
-                    direccion.setEnabled(true);}}
+                    direccion.setEnabled(false);}}
         });
 
         btnPedidoQuitarProducto.setOnClickListener(new View.OnClickListener() {

@@ -2,12 +2,10 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.provider.MediaStore;
+import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.view.View;
-import android.widget.AdapterView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +13,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -123,24 +122,51 @@ public class NuevoPedido extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                unPedido.setEstado(Pedido.Estado.REALIZADO);
-                unPedido.setDetalle(adaptador.getDetallePedido()); //le pide el detalle de lo que muestra actualmente el adaptador
-                unPedido.setDireccionEnvio(direccion.getText().toString());
-                unPedido.setMailContacto(direccionCorreo.getText().toString());
+                String[] horaIngresada = edtPedidoHoraEntrega.getText().toString().split(":");
+                GregorianCalendar horas = new GregorianCalendar();
+                int valorHora = Integer.valueOf(horaIngresada[0]);
+                int valorMinuto = Integer.valueOf(horaIngresada[1]);
+                
+                if(valorHora<0 || valorHora>23){
+                    Toast.makeText(NuevoPedido.this,
+                            "La hora ingresada ("+valorHora+") es incorrecta",
+                            Toast.LENGTH_LONG).show();
+                    return;}
+                if(valorMinuto <0 || valorMinuto >59){
+                    Toast.makeText(NuevoPedido.this,
+                            "Los minutos ingresados ("+valorMinuto+") son incorrectos",
+                            Toast.LENGTH_LONG).show();
+                    return;}
 
-                String hora= edtPedidoHoraEntrega.getText().toString();
-                try {
-                    Date dTime = new SimpleDateFormat("HH:mm").parse(hora);
-                    unPedido.setFecha(dTime);
-                } catch (ParseException e) {                                            //TODO: esto podria dar error en algun momento con hora mal ingresada
-                    e.printStackTrace();}
+                if (direccionCorreo.getText()!=null && (optPedidoRetira.isChecked() || optPedidoEnviar.isChecked())
+                        && direccion.getText()!=null && edtPedidoHoraEntrega.getText()!=null && unPedido.getDetalle().size()>0){
 
-                if(optPedidoEnviar.isChecked())
-                    unPedido.setRetirar(false);
-                else
-                    unPedido.setRetirar(true);
-                repositorioPedido.guardarPedido(unPedido);  //esto lo agrega al repositorio y le setea el id
-                finish();
+                    unPedido.setEstado(Pedido.Estado.REALIZADO);
+                    unPedido.setDetalle(adaptador.getDetallePedido()); //le pide el detalle de lo que muestra actualmente el adaptador
+                    unPedido.setDireccionEnvio(direccion.getText().toString());
+                    unPedido.setMailContacto(direccionCorreo.getText().toString());
+
+                    horas.set(Calendar.HOUR_OF_DAY,valorHora);
+                    horas.set(Calendar.MINUTE,valorMinuto);
+                    horas.set(Calendar.SECOND,Integer.valueOf(0));
+                    String hora= edtPedidoHoraEntrega.getText().toString();
+                    unPedido.setFecha(horas.getTime());
+
+                    if(optPedidoEnviar.isChecked())
+                        unPedido.setRetirar(false);
+                    else
+                        unPedido.setRetirar(true);
+                    repositorioPedido.guardarPedido(unPedido);  //esto lo agrega al repositorio y le setea el id
+
+                    Intent i = new Intent(NuevoPedido.this, historialPedidos.class);
+                    startActivity(i);
+                    finish();
+                }
+                else {
+                    Toast mensaje = Toast.makeText(getApplicationContext(),
+                            "Por favor, complete todos los campos!", Toast.LENGTH_SHORT);
+                    mensaje.show();
+                }
             }
         });
 

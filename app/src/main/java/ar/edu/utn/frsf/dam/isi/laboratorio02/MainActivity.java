@@ -7,17 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
-import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
-import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
-import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
-import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class MainActivity extends AppCompatActivity {
 

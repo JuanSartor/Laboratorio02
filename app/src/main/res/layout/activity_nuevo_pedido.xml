@@ -93,7 +93,7 @@
 
     <ListView
         android:id="@+id/lst_detalles"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="133dp" />
 
     <LinearLayout

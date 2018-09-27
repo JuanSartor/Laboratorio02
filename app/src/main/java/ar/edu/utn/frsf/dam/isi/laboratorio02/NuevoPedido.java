@@ -42,7 +42,6 @@ public class NuevoPedido extends AppCompatActivity {
     private Button btnPedidoVolver;
     private TextView lblTotalPedido;
     private detallePedidoAdapter adaptador;
-    private ListView listaDetalles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +59,6 @@ public class NuevoPedido extends AppCompatActivity {
         optPedidoRetira = (RadioButton) findViewById(R.id.optPedidoRetira);
         optPedidoEnviar = (RadioButton) findViewById(R.id.optPedidoEnviar);
         edtPedidoHoraEntrega = (EditText) findViewById(R.id.edtPedidoHoraEntrega);
-        listaDetalles = (ListView) findViewById(R.id.lstPedidoItems);
-        //lstPedidoItems = (ListView) findViewById(R.id.lstPedidoItems);  lo comente para probar
         btnPedidoAddProducto = (Button) findViewById(R.id.btnPedidoAddProducto);
         btnPedidoQuitarProducto = (Button) findViewById(R.id.btnPedidoQuitarProducto);
         lblTotalPedido = (TextView) findViewById(R.id.lblTotalPedido);
@@ -105,8 +102,6 @@ public class NuevoPedido extends AppCompatActivity {
 
         final detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
         listaDetalles.setAdapter(adaptador);
-        // radiogrupo= (RadioGroup) findViewById(R.id.radioGroup); lo comente par probar
-        // direccion=(EditText) findViewById(R.id.editText2); lo comente para probar
 
         radiogrupo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -115,15 +110,6 @@ public class NuevoPedido extends AppCompatActivity {
                     direccion.setEnabled(false);}
                 else{
                     direccion.setEnabled(true);}}
-        });
-
-        btnPedidoAddProducto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(NuevoPedido.this, lista_prod.class);
-                i.putExtra("NUEVO_PEDIDO",1);
-                startActivityForResult(i,1);
-            }
         });
 
         btnPedidoQuitarProducto.setOnClickListener(new View.OnClickListener() {
@@ -141,10 +127,6 @@ public class NuevoPedido extends AppCompatActivity {
         });
 
 
-        detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
-
-        listaDetalles.setAdapter(adaptador);
-
         btnPedidoVolver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -157,14 +139,12 @@ public class NuevoPedido extends AppCompatActivity {
         btnPedidoAddProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent i = new Intent(NuevoPedido.this, lista_prod.class);
-// me falta referenciar y tomar el producto que selecciona, luego agregarlo a la lista del detalle y visualisarlo
-
-
-
+                // me falta referenciar y tomar el producto que selecciona, luego agregarlo a la lista del detalle y visualisarlo
+                i.putExtra("NUEVO_PEDIDO",1);
+                startActivityForResult(i,1);
             }
-        });
+        });}
 
 
     @Override

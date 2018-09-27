@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, historialPedidos.class);
                 PedidoRepository rep=new PedidoRepository();
 
-                //DATOS DE PRUEBA///////////////////////////////////////////// //TODO: quitar estos datos de prueba
+                /*//DATOS DE PRUEBA///////////////////////////////////////////// //TODO: quitar estos datos de prueba
                 //productos de prueba para armar "pedidos detalle"
                 Producto p1 = new Producto("perro",14.3,new Categoria("perros"));
                 Producto p2 = new Producto("carpincho",107.3,new Categoria("fauna"));
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                //////////////////////////////////////////////////////////////
+                //////////////////////////////////////////////////////////////*/
 
                 startActivity(i);
             }

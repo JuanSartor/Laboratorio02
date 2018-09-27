@@ -8,15 +8,23 @@
 
     <TextView
         android:id="@+id/tv_producto"
-        android:layout_width="70dp"
+        android:layout_width="14dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/tv_producto" />
 
     <TextView
         android:id="@+id/tv_cantidad_producto"
-        android:layout_width="wrap_content"
+        android:layout_width="129dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/tv_cant_producto" />
+
+    <RadioButton
+        android:id="@+id/rdb_detallePedido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/rdb_detallePedido" />
+
 </LinearLayout>

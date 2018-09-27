@@ -3,6 +3,7 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 
 public class NuevoPedido extends AppCompatActivity {
 
@@ -19,6 +21,8 @@ public class NuevoPedido extends AppCompatActivity {
     private ProductoRepository repositorioProducto;
     private RadioGroup radiogrupo;
     private EditText direccion;
+    private ListView listaDetalles;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,7 @@ public class NuevoPedido extends AppCompatActivity {
         repositorioProducto= new ProductoRepository();
         radiogrupo= (RadioGroup) findViewById(R.id.radioGroup);
         direccion=(EditText) findViewById(R.id.editText2);
+        detallePedidoAdapter adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
 
         radiogrupo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -44,6 +49,8 @@ public class NuevoPedido extends AppCompatActivity {
             }
         });
 
+
+        listaDetalles= (ListView) findViewById(R.id.lst_detalles);
 
     }
 }

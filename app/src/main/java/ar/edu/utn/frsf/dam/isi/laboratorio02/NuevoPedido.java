@@ -113,6 +113,8 @@ public class NuevoPedido extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 unPedido.quitarDetalle(adaptador.getSeleccionado());
+                lblTotalPedido.setText(getString(R.string.totalPedido)+String.valueOf(unPedido.total()));
+                adaptador.notifyDataSetChanged();
             }
         });
 
@@ -137,6 +139,7 @@ public class NuevoPedido extends AppCompatActivity {
                 else
                     unPedido.setRetirar(true);
                 repositorioPedido.guardarPedido(unPedido);  //esto lo agrega al repositorio y le setea el id
+                finish();
             }
         });
 
@@ -164,6 +167,7 @@ public class NuevoPedido extends AppCompatActivity {
                 PedidoDetalle pedDet = new PedidoDetalle(cantidad,repositorioProducto.buscarPorId(idProducto));
                 pedDet.setPedido(unPedido);
                 adaptador.notifyDataSetChanged();
+                lblTotalPedido.setText(getString(R.string.totalPedido)+String.valueOf(unPedido.total()));
             }}
     }
 }

@@ -1,5 +1,6 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -50,8 +51,12 @@ public class historialPedidos extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(historialPedidos.this, NuevoPedido.class);
                 i.putExtra("origen",0);
-                startActivity(i);
+                startActivityForResult(i,0);
             }
         });
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+                adapterPedido.notifyDataSetChanged();
     }
 }

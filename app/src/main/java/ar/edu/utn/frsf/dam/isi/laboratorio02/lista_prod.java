@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
@@ -77,11 +78,17 @@ public class lista_prod extends AppCompatActivity {
         btnProdAddPedido.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Integer.parseInt(edtProdCant.getText().toString())>0){
                 Intent salida = new Intent();
                 salida.putExtra("cantidad", Integer.parseInt(edtProdCant.getText().toString()));
                 salida.putExtra("idProducto",adapterProducto.getProductoSeleccionado().getId());
                 setResult(Activity.RESULT_OK, salida);
-                finish();
+                finish();}
+                else {
+                    Toast mensaje = Toast.makeText(getApplicationContext(),
+                            "No se puede pedir 0 unidades!", Toast.LENGTH_SHORT);
+                    mensaje.show();
+                }
             }
 
         });

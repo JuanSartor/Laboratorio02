@@ -112,9 +112,10 @@ public class NuevoPedido extends AppCompatActivity {
         btnPedidoQuitarProducto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (unPedido.getDetalle().size()>0){
                 unPedido.quitarDetalle(adaptador.getSeleccionado());
                 lblTotalPedido.setText(getString(R.string.totalPedido)+String.valueOf(unPedido.total()));
-                adaptador.notifyDataSetChanged();
+                adaptador.notifyDataSetChanged();}
             }
         });
 

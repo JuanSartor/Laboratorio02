@@ -18,6 +18,7 @@ import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
@@ -121,6 +122,35 @@ public class NuevoPedido extends AppCompatActivity {
         btnPedidoHacerPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Runnable nuevoRun = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.currentThread().sleep(10000);
+                        } catch (InterruptedException e) {
+
+                            e.printStackTrace();
+                        }
+                        // buscar pedidos no aceptados y aceptarlos utomáticamente
+                        List<Pedido> lista = repositorioPedido.getLista();
+                        for(Pedido p:lista){
+                            if(p.getEstado().equals(Pedido.Estado.REALIZADO))
+                                p.setEstado(Pedido.Estado.ACEPTADO);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(NuevoPedido.this,
+                                        "Informacion de pedidos actualizada!",
+                                        Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                };
+
+                Thread unHilo = new Thread(nuevoRun);
+                unHilo.start();
 
                 String[] horaIngresada = edtPedidoHoraEntrega.getText().toString().split(":");
                 GregorianCalendar horas = new GregorianCalendar();

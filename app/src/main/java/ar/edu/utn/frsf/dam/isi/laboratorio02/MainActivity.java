@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent nuevoServicio =
                         new Intent(MainActivity.this,
-                                temp.class);
+                                PrepararPedidoService.class);
                 startService(nuevoServicio);
                 finish();
             }

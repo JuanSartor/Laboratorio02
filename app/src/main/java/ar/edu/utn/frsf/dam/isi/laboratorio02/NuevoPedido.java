@@ -6,6 +6,7 @@ import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -139,17 +140,17 @@ public class NuevoPedido extends AppCompatActivity {
                             if(p.getEstado().equals(Pedido.Estado.REALIZADO))
                                 p.setEstado(Pedido.Estado.ACEPTADO);
 
-                            Intent i = new Intent();
-                            i.putExtra("idPedido",p.getId());
+                            Intent i = new Intent(NuevoPedido.this, EstadoPedidoReciver.class);
                             i.setAction(EstadoPedidoReciver.ESTADO_ACEPTADO);
+                            i.putExtra("idPedido",p.getId());
                             sendBroadcast(i);
                         }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(NuevoPedido.this,
+                                /*Toast.makeText(NuevoPedido.this,
                                         "Informacion de pedidos actualizada!",
-                                        Toast.LENGTH_LONG).show();
+                                        Toast.LENGTH_LONG).show();*/
                             }
                         });
                     }

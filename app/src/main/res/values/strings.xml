@@ -41,4 +41,5 @@
     <string name="totalPedido">Total del pedido: $</string>
     <string name="channel_name">pedidoNotificacion</string>
     <string name="channel_desc">Notificacion sobre cambios de estados en los pedidos</string>
+    <string name="btnPrepPedidos">Preparar pedidos</string>
 </resources>

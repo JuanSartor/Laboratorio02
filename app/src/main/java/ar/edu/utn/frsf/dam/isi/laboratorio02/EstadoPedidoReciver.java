@@ -22,8 +22,6 @@ public class EstadoPedidoReciver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
         String estado="DESCONOCIDO";
         if (intent.getAction() != null) {
             switch (intent.getAction()){

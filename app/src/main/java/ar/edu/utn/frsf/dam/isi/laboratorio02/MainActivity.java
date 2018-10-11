@@ -1,6 +1,5 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
-import android.app.Activity;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
@@ -9,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 
@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnNuevoPedido;
     private Button btnHistorial;
     private Button btnListaProductos;
+    private Button btnPrepararPedidos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnPrepararPedidos = (Button) findViewById(R.id.btnPrepararPedidos);
+        btnPrepararPedidos.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent nuevoServicio =
+                        new Intent(MainActivity.this,
+                                temp.class);
+                startService(nuevoServicio);
+                finish();
+            }
+        });
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     private void createNotificationChannel(){

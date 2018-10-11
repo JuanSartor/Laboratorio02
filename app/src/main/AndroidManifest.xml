@@ -14,11 +14,6 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_ACEPTADO"/>
-                <action android:name="ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_CANCELADO"/>
-                <action android:name="ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_EN_PREPARACION"/>
-                <action android:name="ar.edu.utn.frsf.dam.isi.laboratorio02.ESTADO_LISTO"/>
-
             </intent-filter>
         </activity>
         <activity android:name=".lista_prod" />

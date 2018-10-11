@@ -48,6 +48,12 @@ public class EstadoPedidoReciver extends BroadcastReceiver {
             /*DEPRECATED
             * Toast.makeText(context,"Pedido para "+p.getMailContacto()+" ha cambiado de estado a "+estado,Toast.LENGTH_LONG).show();
             * */
+            /*Se define el Pending Intent para lanzar la actividad que muestre el historial de pedidos al seleccionar la notificación*/
+            Intent i = new Intent(context, historialPedidos.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, i, 0);
+
+            /*Se construye la notificación*/
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "CANAL01")
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
                     .setContentTitle("Tu pedido fue "+estado)
@@ -55,7 +61,9 @@ public class EstadoPedidoReciver extends BroadcastReceiver {
                             .addLine("El costo será de $"+p.total())
                             .addLine("Previsto el envio para "+p.getFecha().getHours()+":"+p.getFecha().getMinutes()))
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
                     .setAutoCancel(true);
+            /*Se muestra la notificación*/
             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
             notificationManager.notify(99,mBuilder.build());
         }

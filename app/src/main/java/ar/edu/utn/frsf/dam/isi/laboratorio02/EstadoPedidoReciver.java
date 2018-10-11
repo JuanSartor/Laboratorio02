@@ -32,7 +32,7 @@ public class EstadoPedidoReciver extends BroadcastReceiver {
                     estado="CANCELADO";
                     break;
                 case ESTADO_EN_PREPARACION:
-                    estado="EN PREPARACIÓN";
+                    estado="EN_PREPARACIÓN";
                     break;
                 case ESTADO_LISTO:
                     estado="LISTO";
@@ -54,7 +54,7 @@ public class EstadoPedidoReciver extends BroadcastReceiver {
             /*Se construye la notificación*/
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, "CANAL01")
                     .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setContentTitle("Tu pedido fue "+estado)
+                    .setContentTitle("Tu pedido esta "+estado)
                     .setStyle(new NotificationCompat.InboxStyle()
                             .addLine("El costo será de $"+p.total())
                             .addLine("Previsto el envio para "+p.getFecha().getHours()+":"+p.getFecha().getMinutes()))

@@ -19,17 +19,18 @@ public class PrepararPedidoService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         try {
+            // Thread.sleep(3000);
             Thread.sleep(20000);
             PedidoRepository pRep = new PedidoRepository();
             listaPedidos = pRep.getLista();
             for (Pedido ped: listaPedidos)
-                if (ped.getEstado()==Pedido.Estado.ACEPTADO)
+                if (ped.getEstado()==Pedido.Estado.ACEPTADO) {
                     ped.setEstado(Pedido.Estado.EN_PREPARACION);
-
-            Intent i = new Intent();
-            i.setAction(EstadoPedidoReciver.ESTADO_EN_PREPARACION);
-            sendBroadcast(i);
-
+                    Intent i = new Intent(PrepararPedidoService.this, EstadoPedidoReciver.class);
+                    i.putExtra("idPedido",ped.getId());
+                    i.setAction(EstadoPedidoReciver.ESTADO_EN_PREPARACION);
+                    sendBroadcast(i);
+                }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

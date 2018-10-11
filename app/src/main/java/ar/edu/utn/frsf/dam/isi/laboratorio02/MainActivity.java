@@ -3,6 +3,8 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.icu.util.Calendar;
+import android.icu.util.GregorianCalendar;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +12,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -39,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(MainActivity.this, historialPedidos.class);
-                PedidoRepository rep=new PedidoRepository();
                 startActivity(i);
             }
         });
@@ -62,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
                         new Intent(MainActivity.this,
                                 PrepararPedidoService.class);
                 startService(nuevoServicio);
-                finish();
             }
         });
     }

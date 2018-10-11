@@ -39,4 +39,6 @@
     <string name="tv_precio">Precio: $</string>
     <string name="rdb_detallePedido"></string>
     <string name="totalPedido">Total del pedido: $</string>
+    <string name="channel_name">pedidoNotificacion</string>
+    <string name="channel_desc">Notificacion sobre cambios de estados en los pedidos</string>
 </resources>

@@ -1,11 +1,13 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -132,18 +134,25 @@ public class NuevoPedido extends AppCompatActivity {
 
                             e.printStackTrace();
                         }
+
                         // buscar pedidos no aceptados y aceptarlos utomáticamente
                         List<Pedido> lista = repositorioPedido.getLista();
                         for(Pedido p:lista){
                             if(p.getEstado().equals(Pedido.Estado.REALIZADO))
                                 p.setEstado(Pedido.Estado.ACEPTADO);
+
+                            Intent i = new Intent(NuevoPedido.this, EstadoPedidoReciver.class);
+                            i.setAction(EstadoPedidoReciver.ESTADO_ACEPTADO);
+                            i.putExtra("idPedido",p.getId());
+                            sendBroadcast(i);
+
                         }
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(NuevoPedido.this,
+                                /*Toast.makeText(NuevoPedido.this,
                                         "Informacion de pedidos actualizada!",
-                                        Toast.LENGTH_LONG).show();
+                                        Toast.LENGTH_LONG).show();*/
                             }
                         });
                     }

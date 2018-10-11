@@ -1,6 +1,7 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.Activity;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
@@ -144,6 +145,7 @@ public class NuevoPedido extends AppCompatActivity {
                             i.setAction(EstadoPedidoReciver.ESTADO_ACEPTADO);
                             i.putExtra("idPedido",p.getId());
                             sendBroadcast(i);
+
                         }
                         runOnUiThread(new Runnable() {
                             @Override

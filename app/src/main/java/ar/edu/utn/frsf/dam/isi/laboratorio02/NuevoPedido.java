@@ -156,7 +156,7 @@ public class NuevoPedido extends AppCompatActivity {
                 };
 
                 Thread unHilo = new Thread(nuevoRun);
-                unHilo.start();
+                //unHilo.start();
 
                 String[] horaIngresada = edtPedidoHoraEntrega.getText().toString().split(":");
                 GregorianCalendar horas = new GregorianCalendar();
@@ -192,7 +192,7 @@ public class NuevoPedido extends AppCompatActivity {
                     else
                         unPedido.setRetirar(true);
                     repositorioPedido.guardarPedido(unPedido);  //esto lo agrega al repositorio y le setea el id
-
+                    Log.d("ID_PEDIDO",String.valueOf(unPedido.getId()));
                     Intent i = new Intent(NuevoPedido.this, historialPedidos.class);
                     startActivity(i);
                     finish();

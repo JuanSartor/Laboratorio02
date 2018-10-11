@@ -131,9 +131,7 @@ public class NuevoPedido extends AppCompatActivity {
                         try {
                             Thread.currentThread().sleep(10000);
                         } catch (InterruptedException e) {
-
-                            e.printStackTrace();
-                        }
+                            e.printStackTrace();}
 
                         // buscar pedidos no aceptados y aceptarlos utomáticamente
                         List<Pedido> lista = repositorioPedido.getLista();
@@ -145,7 +143,6 @@ public class NuevoPedido extends AppCompatActivity {
                             i.setAction(EstadoPedidoReciver.ESTADO_ACEPTADO);
                             i.putExtra("idPedido",p.getId());
                             sendBroadcast(i);
-
                         }
                         runOnUiThread(new Runnable() {
                             @Override
@@ -159,7 +156,7 @@ public class NuevoPedido extends AppCompatActivity {
                 };
 
                 Thread unHilo = new Thread(nuevoRun);
-                unHilo.start();
+                //unHilo.start();
 
                 String[] horaIngresada = edtPedidoHoraEntrega.getText().toString().split(":");
                 GregorianCalendar horas = new GregorianCalendar();
@@ -188,7 +185,6 @@ public class NuevoPedido extends AppCompatActivity {
                     horas.set(Calendar.HOUR_OF_DAY,valorHora);
                     horas.set(Calendar.MINUTE,valorMinuto);
                     horas.set(Calendar.SECOND,Integer.valueOf(0));
-                    String hora= edtPedidoHoraEntrega.getText().toString();
                     unPedido.setFecha(horas.getTime());
 
                     if(optPedidoEnviar.isChecked())
@@ -196,7 +192,7 @@ public class NuevoPedido extends AppCompatActivity {
                     else
                         unPedido.setRetirar(true);
                     repositorioPedido.guardarPedido(unPedido);  //esto lo agrega al repositorio y le setea el id
-
+                    Log.d("ID_PEDIDO",String.valueOf(unPedido.getId()));
                     Intent i = new Intent(NuevoPedido.this, historialPedidos.class);
                     startActivity(i);
                     finish();

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".NuevoPedido">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/lblTitulo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tituloPedido" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/campoCorreo" />
+
+    <EditText
+        android:id="@+id/edtPedidoCorreo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/ejemploCorreo"
+        android:inputType="textEmailAddress" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/campoEntrega" />
+
+    <RadioGroup
+        android:id="@+id/optPedidoModoEntrega"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/optPedidoRetira"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/enLocal" />
+
+        <RadioButton
+            android:id="@+id/optPedidoEnviar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/aDomicilio" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/campoDomicilio" />
+
+    <EditText
+        android:id="@+id/edtPedidoDireccion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/ejemploDomicilio"
+        android:inputType="none" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/campoHora" />
+
+    <EditText
+        android:id="@+id/edtPedidoHoraEntrega"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/ejemploHora"
+        android:inputType="time" />
+
+   <!-- <ListView
+        android:id="@+id/lstPedidoItems"
+        android:layout_width="wrap_content"
+        android:layout_height="106dp" />
+
+        lo comente porque genera error por el id(tiene 2 id)
+        abajo lo hice como lst_detalles
+        -->
+
+    <ListView
+        android:id="@+id/lst_detalles"
+        android:layout_width="match_parent"
+        android:layout_height="133dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnPedidoAddProducto"
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.45"
+            android:text="@string/btnAgregarProd" />
+
+        <Button
+            android:id="@+id/btnPedidoQuitarProducto"
+            android:layout_width="193dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.45"
+            android:elevation="0dp"
+            android:text="@string/btnQuitarProd"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lblTotalPedido"
+        android:layout_width="match_parent"
+        android:layout_height="22dp"
+        android:text="@string/textoTotal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnPedidoHacerPedido"
+            android:layout_width="193dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:elevation="0dp"
+            android:text="@string/btnHPedido"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btnPedidoVolver"
+            android:layout_width="187dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/btnVolv" />
+    </LinearLayout>
+
+</LinearLayout>
+    </ScrollView>
+</LinearLayout>

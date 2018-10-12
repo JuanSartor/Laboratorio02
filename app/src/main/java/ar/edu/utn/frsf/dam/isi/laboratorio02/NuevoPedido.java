@@ -156,7 +156,7 @@ public class NuevoPedido extends AppCompatActivity {
                 };
 
                 Thread unHilo = new Thread(nuevoRun);
-                //unHilo.start();
+                unHilo.start();
 
                 String[] horaIngresada = edtPedidoHoraEntrega.getText().toString().split(":");
                 GregorianCalendar horas = new GregorianCalendar();

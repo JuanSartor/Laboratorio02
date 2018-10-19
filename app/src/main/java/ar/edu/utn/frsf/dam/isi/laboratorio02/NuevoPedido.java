@@ -3,6 +3,7 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
 import android.support.v7.app.AppCompatActivity;
@@ -97,6 +98,10 @@ public class NuevoPedido extends AppCompatActivity {
             btnPedidoHacerPedido.setEnabled(false);     // historial, se debe cancelar el pedido y hacer otro.
         }
         else{
+            PreferenciasCompartidas prefs = new PreferenciasCompartidas();
+
+            optPedidoRetira.setChecked(prefs.getPreferences(0).getBoolean("keyRetiro",false));
+            direccionCorreo.setText(prefs.getPreferences(0).getString("keyCorreo",""));
             unPedido= new Pedido();}
 
         adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());

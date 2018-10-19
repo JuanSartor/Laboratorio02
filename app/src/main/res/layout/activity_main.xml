@@ -40,4 +40,10 @@
         android:layout_height="wrap_content"
         android:text="@string/btnPrepPedidos" />
 
+    <Button
+        android:id="@+id/btnConfiguracion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnConfMain" />
+
 </LinearLayout>

@@ -42,4 +42,9 @@
     <string name="channel_name">pedidoNotificacion</string>
     <string name="channel_desc">Notificacion sobre cambios de estados en los pedidos</string>
     <string name="btnPrepPedidos">Preparar pedidos</string>
+    <string name="chkRetirarDefecto">Retirar por defecto</string>
+    <string name="chkRetirarDefectoSub">el pedido es para retirar</string>
+    <string name="edtCorreoElectronico">Correo Electronico</string>
+    <string name="edtCorreoElectronicoSub">Se usará por defecto</string>
+    <string name="btnConfMain">CONFIGURACION</string>
 </resources>

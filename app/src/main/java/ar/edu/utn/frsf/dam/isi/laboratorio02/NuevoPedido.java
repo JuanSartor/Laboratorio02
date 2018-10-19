@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -98,10 +99,15 @@ public class NuevoPedido extends AppCompatActivity {
             btnPedidoHacerPedido.setEnabled(false);     // historial, se debe cancelar el pedido y hacer otro.
         }
         else{
-            PreferenciasCompartidas prefs = new PreferenciasCompartidas();
 
-            optPedidoRetira.setChecked(prefs.getPreferences(0).getBoolean("keyRetiro",false));
-            direccionCorreo.setText(prefs.getPreferences(0).getString("keyCorreo",""));
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+            if (prefs.getBoolean("keyRetiro",false)){
+                optPedidoRetira.setChecked(true);
+            }else{
+                optPedidoEnviar.setChecked(true);
+            }
+            direccionCorreo.setText(prefs.getString("keyCorreo"," "));
             unPedido= new Pedido();}
 
         adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());

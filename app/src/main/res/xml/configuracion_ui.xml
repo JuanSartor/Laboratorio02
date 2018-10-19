@@ -9,7 +9,7 @@
         android:title="@string/chkRetirarDefecto" />
     <EditTextPreference
         android:defaultValue="Default value"
-        android:key="edit_text_preference_1"
+        android:key="keyCorreo"
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:summary="@string/edtCorreoElectronicoSub"

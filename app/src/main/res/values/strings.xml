@@ -47,4 +47,8 @@
     <string name="edtCorreoElectronico">Correo Electronico</string>
     <string name="edtCorreoElectronicoSub">Se usará por defecto</string>
     <string name="btnConfMain">CONFIGURACION</string>
+    <string name="btnCategorias">CATEGORIAS</string>
+    <string name="btnGuardarCategorias">GUARDAR</string>
+    <string name="btnVolverCategorias">VOLVER</string>
+    <string name="tvNombreCategoria">Nombre de la Categoria</string>
 </resources>

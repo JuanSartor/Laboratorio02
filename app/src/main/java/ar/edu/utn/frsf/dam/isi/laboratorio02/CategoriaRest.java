@@ -100,7 +100,9 @@ public class CategoriaRest {
                 JSONArray listaCategorias = (JSONArray) tokener.nextValue();
 
                 for(int i=0;listaCategorias.length()>=i;i++){
-                    Categoria cat = new Categoria(listaCategorias.getJSONObject(i).getString("nombre"));
+                    String nombre = listaCategorias.getJSONObject(i).getString("nombre");
+                    int id = listaCategorias.getJSONObject(i).getInt("id");
+                    Categoria cat = new Categoria(id,nombre);
                     resultado.add(cat);
                 }
             }else{

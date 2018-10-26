@@ -70,9 +70,7 @@ public class CategoriaRest {
             }
     }
 
-    // definir el método
     public List<Categoria> listarTodas(){
-        // inicializar variables
         List<Categoria> resultado = new ArrayList<>();
         HttpURLConnection urlConnection = null;
         InputStream in =null;
@@ -83,38 +81,31 @@ public class CategoriaRest {
             urlConnection.setRequestProperty("Accept-Type","application/json");
             urlConnection.setRequestMethod("GET");
 
-            // Leer la respuesta
+            // leer respuesta
             in = new BufferedInputStream(urlConnection.getInputStream());
             InputStreamReader isw = new InputStreamReader(in);
             StringBuilder sb = new StringBuilder();
             int data = isw.read();
 
-            // verificar el codigo de respuesta
-            if( urlConnection.getResponseCode() ==200 ||
-                    urlConnection.getResponseCode()==201){
+            // si la respuesta es valida, se recolecta la informacion en el StringBuilder (sb)
+            if( urlConnection.getResponseCode() ==200 || urlConnection.getResponseCode()==201){
                 while (data != -1) {
                     char current = (char) data;
                     sb.append(current);
                     data = isw.read();
                 }
-                // ver datos recibidos
-                Log.d("LAB_04",sb.toString());
-                // Transformar respuesta a JSON
+
+                // Transformar a JSON
                 JSONTokener tokener = new JSONTokener(sb.toString());
                 JSONArray listaCategorias = (JSONArray) tokener.nextValue();
 
-                // iterar todas las entradas del arreglo
-                for(...){
-                    Categoria cat = new Categoria();
-                    // analizar cada element del JSONArray
-                    //armar una instancia de categoría y agregarla a la lista
+                for(int i=0;listaCategorias.length()>=i;i++){
+                    Categoria cat = new Categoria(listaCategorias.getJSONObject(i).getString("nombre"));
                     resultado.add(cat);
                 }
             }else{
-                // lanzar excepcion o mostrar mensaje de error
-                // que no se pudo ejecutar la operacion
-            }
-            //NO OLVIDAR CERRAR inputStream y conexion
+                Log.d("Error", "se produjo un error en el proceso!");}
+            //cerrando conexion
             if(in!=null) in.close();
             if(urlConnection !=null)urlConnection.disconnect();
         }

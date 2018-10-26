@@ -33,9 +33,7 @@ public class CategoriaActivity extends AppCompatActivity {
                 Runnable r=new Runnable() {
                     @Override
                     public void run() {
-                        //TODO reemplazar ProductoRepository por la lista obtenida por el JSon
-                        ProductoRepository pr = new ProductoRepository();
-                        Categoria cat= new Categoria(pr.getCategorias().get(pr.getCategorias().size()).getId()+1,nombreCat.getText().toString());
+                        Categoria cat= new Categoria(nombreCat.getText().toString());
                         cr.crearCategoria(cat);
                         Runnable r2=new Runnable() {
                             @Override

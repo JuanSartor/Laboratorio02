@@ -33,7 +33,7 @@ public class CategoriaRest {
 
 
             //Abrir una conexión al servidor para enviar el POST
-            URL url = new URL("http://10.0.2.2:5000");
+            URL url = new URL("http://10.0.2.2:5000/categorias");
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setChunkedStreamingMode(0);
             urlConnection.setRequestProperty("Content-Type", "application/json");

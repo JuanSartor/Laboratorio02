@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 
 public class CategoriaActivity extends AppCompatActivity {
@@ -32,7 +33,9 @@ public class CategoriaActivity extends AppCompatActivity {
                 Runnable r=new Runnable() {
                     @Override
                     public void run() {
-                        Categoria cat= new Categoria(nombreCat.getText().toString());
+                        //TODO reemplazar ProductoRepository por la lista obtenida por el JSon
+                        ProductoRepository pr = new ProductoRepository();
+                        Categoria cat= new Categoria(pr.getCategorias().get(pr.getCategorias().size()).getId()+1,nombreCat.getText().toString());
                         cr.crearCategoria(cat);
                         Runnable r2=new Runnable() {
                             @Override

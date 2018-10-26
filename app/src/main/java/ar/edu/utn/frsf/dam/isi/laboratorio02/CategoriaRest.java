@@ -71,16 +71,8 @@ public class CategoriaRest {
                 if(printout!=null)  printout.close();
                 if(in!=null) in.close();
                 if(urlConnection !=null)urlConnection.disconnect();
-        } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+        } catch (Exception e) {
+                Log.e("Error", e.getMessage());
             }
     }
 }

@@ -52,6 +52,7 @@ public class CategoriaActivity extends AppCompatActivity {
             }
         });
 
+        
         btnMenu= (Button) findViewById(R.id.btnCategoriaVolver);
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override

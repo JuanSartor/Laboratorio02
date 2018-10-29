@@ -51,4 +51,23 @@
     <string name="btnGuardarCategorias">GUARDAR</string>
     <string name="btnVolverCategorias">VOLVER</string>
     <string name="tvNombreCategoria">Nombre de la Categoria</string>
+    <string name="tvBuscarProdPorId">Buscar Producto por Id</string>
+    <string name="txtOn">Buscar por ID y actualizar</string>
+    <string name="txtOff">Crear producto nuevo</string>
+    <string name="btnBuscarPorIdGestion">Buscar por ID</string>
+    <string name="tvDatosDelProducto">Datos del Producto</string>
+    <string name="tvNombreProdu">Nombre</string>
+    <string name="tvDescripcion">Descripcion</string>
+    <string name="tvPrecio">Precio</string>
+    <string name="tvCategoria">Categoria</string>
+    <string name="btnGuardar">Guardar</string>
+    <string name="btnBorrar">Borrar</string>
+    <string name="btnVolver">Volver</string>
+    <string name="hintID">Ingrese Id</string>
+    <string name="hintNombre">Ingrese Nombre</string>
+    <string name="hintDescripcion">Describa el Producto</string>
+    <string name="hintPrecio">Ingrese el precio</string>
+
+
+
 </resources>

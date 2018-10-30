@@ -67,6 +67,7 @@
     <string name="hintNombre">Ingrese Nombre</string>
     <string name="hintDescripcion">Describa el Producto</string>
     <string name="hintPrecio">Ingrese el precio</string>
+    <string name="btnGestorProducto">Gestionar Producto</string>
 
 
 

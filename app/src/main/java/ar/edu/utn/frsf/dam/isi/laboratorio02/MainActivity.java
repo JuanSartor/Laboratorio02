@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button btnPrepararPedidos;
     private Button btnConfiguracion;
     private Button btnCategorias;
+    private Button btnGestorProducto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +100,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        btnGestorProducto= (Button) findViewById(R.id.btnGestorProducto);
+        btnGestorProducto.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i= new Intent(MainActivity.this, GestionProductoActivity.class);
+                startActivity(i);
+
+            }
+
+        });
+
     }
 
     @Override

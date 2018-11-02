@@ -375,85 +375,10 @@ public class GestionProductoActivity extends AppCompatActivity{
 
 
 
-
-
-
-
-
+   
 
 
 }
 
 
 }
-
-
-
-
-
- /* btnGuardar.setOnClickListener(new View.OnClickListener(){
-
-
-@Override public void onClick(View v){
-
-        int id=Integer.valueOf(idProductoBuscar.getText().toString());
-
-
-final Producto nuevo_producto = new Producto();
-        ProductoRetrofit clienteRest = RestClient.getInstance()
-        .getRetrofit()
-        .create(ProductoRetrofit.class);
-final Call<Producto> altaCall= clienteRest.actualizarProducto(id,nuevo_producto);
-
-
-
-
-        if((nombreProducto.getText()!=null)&&(descProducto.getText()!=null)&&(precioProducto.getText()!=null&&(cat_seleccionada!=null))){
-
-        nuevo_producto.setNombre(nombreProducto.getText().toString());
-        nuevo_producto.setDescripcion(descProducto.getText().toString());
-        nuevo_producto.setPrecio(Double.valueOf(precioProducto.getText().toString()));
-        nuevo_producto.setCategoria(cat_seleccionada);
-
-
-
-
-        altaCall.enqueue(new Callback<Producto>() {
-@Override
-public void onResponse(Call<Producto> call, Response<Producto> response) {
-
-        if(response.isSuccessful()){
-
-        Toast mensaje = Toast.makeText(getApplicationContext(),
-        "Se actualizo un nuevo producto!", Toast.LENGTH_SHORT);
-        mensaje.show();
-
-
-        }
-        else{}
-
-        }
-
-@Override
-public void onFailure(Call<Producto> call, Throwable t) {
-
-        }
-        });
-
-
-
-        }
-        else{
-
-        Toast mensaje = Toast.makeText(getApplicationContext(),
-        "Por favor, complete todos los campos!", Toast.LENGTH_SHORT);
-        mensaje.show();
-
-        }
-
-
-
-
-        }
-        });
-        */

@@ -133,12 +133,12 @@ public class NuevoPedido extends AppCompatActivity {
         });
 
         btnPedidoHacerPedido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
 
                 Runnable nuevoRun = new Runnable() {
-                    @Override
-                    public void run() {
+                        @Override
+                        public void run() {
                         try {
                             Thread.currentThread().sleep(10000);
                         } catch (InterruptedException e) {

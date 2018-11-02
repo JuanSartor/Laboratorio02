@@ -55,7 +55,7 @@ public class pedidoAdapter extends ArrayAdapter<Pedido> {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         holder.txtFechayHora.setText(ctx.getString(R.string.fyhFilaHistorial)+" "+sdf.format(ped.getFecha()));
 
-        holder.txtCosto.setText(ctx.getString(R.string.costoFilaHistorial)+" $"+String.valueOf(costoTotal));
+        holder.txtCosto.setText(ctx.getString(R.string.costoFilaHistorial)+" $"+String.format("%.3f",costoTotal));
         holder.txtCantidad.setText(ctx.getString(R.string.cantidadFilaHistorial)+" "+Integer.toString(cantTotal));
 
         switch (ped.getEstado()){

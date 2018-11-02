@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private Button btnHistorial;
     private Button btnListaProductos;
     private Button btnPrepararPedidos;
+    private Button btnConfiguracion;
+    private Button btnCategorias;
+    private Button btnGestorProducto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +82,36 @@ public class MainActivity extends AppCompatActivity {
                 startService(nuevoServicio);
             }
         });
+
+        btnConfiguracion = (Button) findViewById(R.id.btnConfiguracion);
+        btnConfiguracion.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, PreferenciasCompartidas.class);
+                startActivity(i);
+            }
+        });
+
+        btnCategorias = (Button) findViewById(R.id.btnCategorias);
+        btnCategorias.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, CategoriaActivity.class);
+                startActivity(i);
+            }
+        });
+
+        btnGestorProducto= (Button) findViewById(R.id.btnGestorProducto);
+        btnGestorProducto.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i= new Intent(MainActivity.this, GestionProductoActivity.class);
+                startActivity(i);
+
+            }
+
+        });
+
     }
 
     @Override

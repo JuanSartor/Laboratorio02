@@ -3,8 +3,10 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,6 +99,15 @@ public class NuevoPedido extends AppCompatActivity {
             btnPedidoHacerPedido.setEnabled(false);     // historial, se debe cancelar el pedido y hacer otro.
         }
         else{
+
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+            if (prefs.getBoolean("keyRetiro",false)){
+                optPedidoRetira.setChecked(true);
+            }else{
+                optPedidoEnviar.setChecked(true);
+            }
+            direccionCorreo.setText(prefs.getString("keyCorreo"," "));
             unPedido= new Pedido();}
 
         adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
@@ -122,12 +133,12 @@ public class NuevoPedido extends AppCompatActivity {
         });
 
         btnPedidoHacerPedido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                @Override
+                public void onClick(View v) {
 
                 Runnable nuevoRun = new Runnable() {
-                    @Override
-                    public void run() {
+                        @Override
+                        public void run() {
                         try {
                             Thread.currentThread().sleep(10000);
                         } catch (InterruptedException e) {
@@ -156,7 +167,7 @@ public class NuevoPedido extends AppCompatActivity {
                 };
 
                 Thread unHilo = new Thread(nuevoRun);
-                //unHilo.start();
+                unHilo.start();
 
                 String[] horaIngresada = edtPedidoHoraEntrega.getText().toString().split(":");
                 GregorianCalendar horas = new GregorianCalendar();

@@ -1,10 +1,22 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02.modelo;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.Objects;
 
+import io.reactivex.annotations.NonNull;
+
+@Entity(tableName = "Categorias")
 public class Categoria {
 
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
     private Integer id;
+
+    @NonNull
+    @ColumnInfo(name = "nombre")
     private String nombre;
 
     public Categoria(Integer id, String nombre) {

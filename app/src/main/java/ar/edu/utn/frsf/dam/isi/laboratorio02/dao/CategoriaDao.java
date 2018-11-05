@@ -12,11 +12,11 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 
 @Dao
 public interface CategoriaDao {
-    @Query("SELECT * FROM categoria")
-    List<Categoria> getAll();
+   @Query("SELECT * FROM Categorias")
+   List<Categoria> getAll();
 
-    @Query("SELECT * FROM categoria WHERE id IN (:categoriaIds)")
-    List<Categoria> loadAllByIds(int[] categoriaIds);
+   // @Query("SELECT * FROM categoria WHERE id IN (:categoriaIds)")
+   // List<Categoria> loadAllByIds(int[] categoriaIds);
 
 
     @Insert

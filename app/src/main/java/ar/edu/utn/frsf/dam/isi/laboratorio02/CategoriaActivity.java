@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.CategoriaDao;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDb;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 
@@ -16,11 +18,14 @@ public class CategoriaActivity extends AppCompatActivity {
     private EditText nombreCat;
     private Button btnCrear;
     private Button btnMenu;
+    private CategoriaDao catDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categoria);
+
+        catDao= MyDb.getInstance(this).getCategoriaDao();
 
         nombreCat = (EditText) findViewById(R.id.txtNombreCategoria);
 
@@ -29,12 +34,14 @@ public class CategoriaActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
             // completar el codigo en el paso “g”
-                final CategoriaRest cr = new CategoriaRest();
+               // final CategoriaRest cr = new CategoriaRest();
                 Runnable r=new Runnable() {
                     @Override
                     public void run() {
-                        Categoria cat= new Categoria(nombreCat.getText().toString());
-                        cr.crearCategoria(cat);
+                       final  Categoria cat= new Categoria(nombreCat.getText().toString());
+
+                        catDao.insertAll(cat);
+                 //      cr.crearCategoria(cat);
                         Runnable r2=new Runnable() {
                             @Override
                             public void run() {

@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.CategoriaDao;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDb;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 
@@ -28,6 +30,7 @@ public class lista_prod extends AppCompatActivity {
     private ProductoRepository repositorio;
     private Button btnProdAddPedido;
     private EditText edtProdCant;
+    private CategoriaDao catDao;
 
 
     @Override
@@ -39,6 +42,8 @@ public class lista_prod extends AppCompatActivity {
         final Intent intentExtras = getIntent();
         btnProdAddPedido = (Button) findViewById(R.id.btnProdAddPedido);
         edtProdCant = (EditText) findViewById(R.id.edtProdCantidad);
+
+        catDao= MyDb.getInstance(this).getCategoriaDao();
 
         //Habilitar o deshabilitar boton y campo cantidad de acuerdo a punto de llamada
         if (intentExtras.getExtras().getInt("NUEVO_PEDIDO") == 0) {
@@ -55,8 +60,10 @@ public class lista_prod extends AppCompatActivity {
         Runnable codeHilo = new Runnable() {    //agregado para ejecutar en hilo aparte la carga de combobox y lista
             @Override
             public void run() {
-                CategoriaRest cr = new CategoriaRest();
-                final List<Categoria> listaCategorias = cr.listarTodas();     //obteniendo lista categorias de servidor
+                //CategoriaRest cr = new CategoriaRest();
+               // final List<Categoria> listaCategorias = cr.listarTodas();     //obteniendo lista categorias de servidor
+                    final List<Categoria> listaCategorias= catDao.getAll();
+
 
                 runOnUiThread(new Runnable() {      //para ejecutar lo relativo a interfaz en hilo principal (de UI)
                     @Override

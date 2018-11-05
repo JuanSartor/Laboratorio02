@@ -2,6 +2,7 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.AppBaseDatos;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         createNotificationChannel();
+
         Log.d("TOKEN!!!", FirebaseInstanceId.getInstance().getToken());
         btnNuevoPedido = (Button) findViewById(R.id.btnMainNuevoPedido);
         btnNuevoPedido.setOnClickListener(new View.OnClickListener() {

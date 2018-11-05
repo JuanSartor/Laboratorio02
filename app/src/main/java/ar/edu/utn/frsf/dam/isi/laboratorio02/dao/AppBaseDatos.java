@@ -12,5 +12,5 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 public abstract class AppBaseDatos extends RoomDatabase {
 
 
-    public abstract CategoriaDao categoriaDao();    
+    public abstract CategoriaDao categoriaDao();
 }

@@ -6,12 +6,16 @@ import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Objects;
 
-@Entity
+import io.reactivex.annotations.NonNull;
+
+@Entity(tableName = "Categorias")
 public class Categoria {
 
     @PrimaryKey(autoGenerate = true)
+    @NonNull
     private Integer id;
 
+    @NonNull
     @ColumnInfo(name = "nombre")
     private String nombre;
 

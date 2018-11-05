@@ -1,5 +1,7 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02.modelo;
 
+
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -19,7 +19,7 @@ public class Categoria {
     @ColumnInfo(name = "nombre")
     private String nombre;
 
-    public Categoria(Integer id, String nombre) {
+   public Categoria(Integer id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }

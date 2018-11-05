@@ -23,6 +23,8 @@ import java.util.List;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.AppBaseDatos;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.CategoriaDao;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDb;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
@@ -38,12 +40,17 @@ public class MainActivity extends AppCompatActivity {
     private Button btnConfiguracion;
     private Button btnCategorias;
     private Button btnGestorProducto;
+    private Button btnBorrarBD;
+    private MyDb instancia;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         createNotificationChannel();
+
+        instancia= MyDb.getInstance(this);
+
 
         Log.d("TOKEN!!!", FirebaseInstanceId.getInstance().getToken());
         btnNuevoPedido = (Button) findViewById(R.id.btnMainNuevoPedido);
@@ -114,6 +121,35 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+
+        btnBorrarBD=(Button) findViewById(R.id.btnBorrarBd);
+        btnBorrarBD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Runnable rBorrar=new Runnable() {
+                    @Override
+                    public void run() {
+                        instancia.borrarTodo();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                Toast.makeText(MainActivity.this,"Se ha borrado la Base de Datos",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                };
+
+                Thread t4 = new Thread(rBorrar);
+                t4.start();
+            }
+        });
+
+
+
+
 
     }
 

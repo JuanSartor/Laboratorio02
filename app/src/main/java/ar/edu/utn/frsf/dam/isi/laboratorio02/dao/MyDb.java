@@ -3,6 +3,8 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02.dao;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
+
 public class MyDb {
 
     private static MyDb _INSTANCIA_UNICA=null;
@@ -15,6 +17,7 @@ public class MyDb {
 
 
     private CategoriaDao daocategoria;
+ //   private ProductoDao daoproducto;
     private  AppBaseDatos db;
 
 
@@ -25,6 +28,7 @@ public class MyDb {
                 .fallbackToDestructiveMigration()
                 .build();
         daocategoria = db.categoriaDao();
+    //    daoproducto = db.productoDao();
 
     }
 
@@ -41,7 +45,8 @@ public class MyDb {
         this.daocategoria = catDao;
     }
 
-
+    //public  ProductoDao getProductoDao(){return daoproducto;}
+   // public void SetProductoDao(ProductoDao proDao){this.daoproducto=proDao;}
 
 
 }

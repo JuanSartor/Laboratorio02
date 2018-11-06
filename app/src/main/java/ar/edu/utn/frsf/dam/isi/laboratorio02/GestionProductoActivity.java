@@ -20,6 +20,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.CategoriaDao;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDb;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoDao;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRetrofit;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
@@ -43,12 +46,16 @@ public class GestionProductoActivity extends AppCompatActivity{
     private Boolean flagActualizacion;
     private ArrayAdapter<Categoria> comboAdapter;
     private Categoria cat_seleccionada;
-
+    private ProductoDao prodDao;
+    private CategoriaDao catDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gestion_producto);
+
+
+
 
         cat_seleccionada= new Categoria();
         flagActualizacion = false;
@@ -69,15 +76,26 @@ public class GestionProductoActivity extends AppCompatActivity{
 
         final Context context = this;
 
+
+
+
+       // catDao= MyDb.getInstance(context).getCategoriaDao();
+
+        //prodDao= MyDb.getInstance(context).getProductoDao();
+
+
+
+
         Runnable nuevoHilo = new Runnable() {
             @Override
             public void run() {
 
 
 
-       CategoriaRest cr= new CategoriaRest();
+      CategoriaRest cr= new CategoriaRest();
         final List<Categoria> listacategorias= cr.listarTodas();
 
+             //   final List<Categoria> listacategorias= catDao.getAll();
 
 
         runOnUiThread(new Runnable() {
@@ -150,20 +168,28 @@ public class GestionProductoActivity extends AppCompatActivity{
                         .create(ProductoRetrofit.class);
 
 
+
                 if(flagActualizacion){
                     int id=Integer.valueOf(idProductoBuscar.getText().toString());
-                     final Call<Producto> altaCall= clienteRest.actualizarProducto(id,nuevo_producto);
+                    final Call<Producto> altaCall= clienteRest.actualizarProducto(id,nuevo_producto);
 
-
+                      /*  int [] arr= new int[1];
+                        arr[1]=id;
+                       Producto actualizar_producto= (Producto) prodDao.loadAllByIds(arr).get(0);
+                        */
                     if((nombreProducto.getText()!=null)&&(descProducto.getText()!=null)&&(precioProducto.getText()!=null&&(cat_seleccionada!=null))){
 
-                        nuevo_producto.setNombre(nombreProducto.getText().toString());
-                        nuevo_producto.setDescripcion(descProducto.getText().toString());
+                       nuevo_producto.setNombre(nombreProducto.getText().toString());
+                       nuevo_producto.setDescripcion(descProducto.getText().toString());
                         nuevo_producto.setPrecio(Double.valueOf(precioProducto.getText().toString()));
                         nuevo_producto.setCategoria(cat_seleccionada);
 
 
 
+                       // prodDao.update(actualizar_producto);
+                        Toast mensaje = Toast.makeText(getApplicationContext(),
+                                "Operacion realziada exitosamente!", Toast.LENGTH_SHORT);
+                        mensaje.show();
 
                         altaCall.enqueue(new Callback<Producto>() {
                             @Override
@@ -213,7 +239,11 @@ public class GestionProductoActivity extends AppCompatActivity{
 
 
 
+                     //   prodDao.insertAll(nuevo_producto);
 
+                        Toast mensaje = Toast.makeText(getApplicationContext(),
+                                "Se ha cargado un nuevo producto!", Toast.LENGTH_SHORT);
+                        mensaje.show();
                         altaCall.enqueue(new Callback<Producto>() {
                             @Override
                             public void onResponse(Call<Producto> call, Response<Producto> response) {
@@ -270,8 +300,10 @@ public class GestionProductoActivity extends AppCompatActivity{
        public void onClick(View v) {
 
            int id=Integer.valueOf(idProductoBuscar.getText().toString());
-
-
+            /*int[] arrePar= new int[0];
+            arrePar[0]=id;
+            Producto proAeliminar= prodDao.loadAllByIds(arrePar).get(0);
+           prodDao.delete(proAeliminar);*/
            ProductoRetrofit clienteRest = RestClient.getInstance()
                    .getRetrofit()
                    .create(ProductoRetrofit.class);
@@ -279,7 +311,7 @@ public class GestionProductoActivity extends AppCompatActivity{
 
 
 
-           altaCall.enqueue(new Callback<Producto>() {
+         altaCall.enqueue(new Callback<Producto>() {
                @Override
                public void onResponse(Call<Producto> call, Response<Producto> response) {
 
@@ -307,12 +339,23 @@ public class GestionProductoActivity extends AppCompatActivity{
        }
    });
 
+
+
+
    btnBuscar.setOnClickListener(new View.OnClickListener()  {
        @Override
        public void onClick(View v) {
 
+          // int [] arregloIds= new int[0];
            int id=Integer.valueOf(idProductoBuscar.getText().toString());
+            //arregloIds[0] = id;
+          /* Producto retorno = (Producto) prodDao.loadAllByIds(arregloIds);
 
+           nombreProducto.setText(retorno.getNombre());
+
+           descProducto.setText(retorno.getDescripcion());
+           precioProducto.setText(retorno.getPrecio().toString());
+*/
 
            ProductoRetrofit clienteRest = RestClient.getInstance()
                    .getRetrofit()

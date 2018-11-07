@@ -7,11 +7,11 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 
-@Database(entities = {Categoria.class,Producto.class}, version = 1)
+@Database(entities = {Categoria.class,Producto.class}, version = 2)
 
 public abstract class AppBaseDatos extends RoomDatabase {
 
 
     public abstract CategoriaDao categoriaDao();
-    public abstract ProductoDao productoDao();
+  public abstract ProductoDao productoDao();
 }

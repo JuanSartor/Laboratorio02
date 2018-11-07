@@ -17,7 +17,7 @@ public class MyDb {
 
 
     private CategoriaDao daocategoria;
- //   private ProductoDao daoproducto;
+    private ProductoDao daoproducto;
     private  AppBaseDatos db;
 
 
@@ -28,7 +28,7 @@ public class MyDb {
                 .fallbackToDestructiveMigration()
                 .build();
         daocategoria = db.categoriaDao();
-    //    daoproducto = db.productoDao();
+      daoproducto = db.productoDao();
 
     }
 
@@ -45,8 +45,8 @@ public class MyDb {
         this.daocategoria = catDao;
     }
 
-    //public  ProductoDao getProductoDao(){return daoproducto;}
-   // public void SetProductoDao(ProductoDao proDao){this.daoproducto=proDao;}
+    public  ProductoDao getProductoDao(){return daoproducto;}
+   public void SetProductoDao(ProductoDao proDao){this.daoproducto=proDao;}
 
 
 }

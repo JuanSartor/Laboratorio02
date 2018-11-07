@@ -79,11 +79,9 @@ public class GestionProductoActivity extends AppCompatActivity{
 
 
 
-       // catDao= MyDb.getInstance(context).getCategoriaDao();
+       catDao= MyDb.getInstance(context).getCategoriaDao();
 
-        //prodDao= MyDb.getInstance(context).getProductoDao();
-
-
+        prodDao= MyDb.getInstance(context).getProductoDao();
 
 
         Runnable nuevoHilo = new Runnable() {
@@ -92,10 +90,10 @@ public class GestionProductoActivity extends AppCompatActivity{
 
 
 
-      CategoriaRest cr= new CategoriaRest();
-        final List<Categoria> listacategorias= cr.listarTodas();
+      //CategoriaRest cr= new CategoriaRest();
+        //final List<Categoria> listacategorias= cr.listarTodas();
 
-             //   final List<Categoria> listacategorias= catDao.getAll();
+             final List<Categoria> listacategorias= catDao.getAll();
 
 
         runOnUiThread(new Runnable() {
@@ -115,13 +113,13 @@ public class GestionProductoActivity extends AppCompatActivity{
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 cat_seleccionada= (Categoria) parent.getSelectedItem();
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
                 cat_seleccionada=null;
-
             }
         });
 
@@ -162,36 +160,35 @@ public class GestionProductoActivity extends AppCompatActivity{
 
         btnGuardar.setOnClickListener(new View.OnClickListener(){
             @Override public void onClick(View v){
-                final Producto nuevo_producto = new Producto();
-                ProductoRetrofit clienteRest = RestClient.getInstance()
+
+              /*  ProductoRetrofit clienteRest = RestClient.getInstance()
                         .getRetrofit()
                         .create(ProductoRetrofit.class);
-
-
+*/
 
                 if(flagActualizacion){
                     int id=Integer.valueOf(idProductoBuscar.getText().toString());
-                    final Call<Producto> altaCall= clienteRest.actualizarProducto(id,nuevo_producto);
+               //     final Call<Producto> altaCall= clienteRest.actualizarProducto(id,nuevo_producto);
 
-                      /*  int [] arr= new int[1];
+                       int [] arr= new int[1];
                         arr[1]=id;
-                       Producto actualizar_producto= (Producto) prodDao.loadAllByIds(arr).get(0);
-                        */
+                       Producto actualizar_producto= new Producto();
+                       actualizar_producto=(Producto) prodDao.loadAllByIds(arr).get(1);
+
                     if((nombreProducto.getText()!=null)&&(descProducto.getText()!=null)&&(precioProducto.getText()!=null&&(cat_seleccionada!=null))){
 
-                       nuevo_producto.setNombre(nombreProducto.getText().toString());
-                       nuevo_producto.setDescripcion(descProducto.getText().toString());
-                        nuevo_producto.setPrecio(Double.valueOf(precioProducto.getText().toString()));
-                        nuevo_producto.setCategoria(cat_seleccionada);
+                       actualizar_producto.setNombre(nombreProducto.getText().toString());
+                       actualizar_producto.setDescripcion(descProducto.getText().toString());
+                        actualizar_producto.setPrecio(Double.valueOf(precioProducto.getText().toString()));
+                        actualizar_producto.setCategoria(cat_seleccionada);
 
+                       prodDao.update(actualizar_producto);
 
-
-                       // prodDao.update(actualizar_producto);
                         Toast mensaje = Toast.makeText(getApplicationContext(),
                                 "Operacion realziada exitosamente!", Toast.LENGTH_SHORT);
                         mensaje.show();
 
-                        altaCall.enqueue(new Callback<Producto>() {
+                      /*  altaCall.enqueue(new Callback<Producto>() {
                             @Override
                             public void onResponse(Call<Producto> call, Response<Producto> response) {
 
@@ -211,9 +208,7 @@ public class GestionProductoActivity extends AppCompatActivity{
                             public void onFailure(Call<Producto> call, Throwable t) {
 
                             }
-                        });
-
-
+                        });*/
 
                     }
                     else{
@@ -227,10 +222,17 @@ public class GestionProductoActivity extends AppCompatActivity{
 
                 }
                 else{
-                final Call<Producto> altaCall= clienteRest.crearProducto(nuevo_producto);
+             //   final Call<Producto> altaCall= clienteRest.crearProducto(nuevo_producto);
 
 
                     if((nombreProducto.getText()!=null)&&(descProducto.getText()!=null)&&(precioProducto.getText()!=null&&(cat_seleccionada!=null))){
+
+                       Runnable runnable = new Runnable() {
+                           @Override
+                           public void run() {
+
+
+                        final Producto nuevo_producto = new Producto();
 
                         nuevo_producto.setNombre(nombreProducto.getText().toString());
                         nuevo_producto.setDescripcion(descProducto.getText().toString());
@@ -238,13 +240,12 @@ public class GestionProductoActivity extends AppCompatActivity{
                         nuevo_producto.setCategoria(cat_seleccionada);
 
 
-
-                     //   prodDao.insertAll(nuevo_producto);
+                        prodDao.insertAll(nuevo_producto);
 
                         Toast mensaje = Toast.makeText(getApplicationContext(),
                                 "Se ha cargado un nuevo producto!", Toast.LENGTH_SHORT);
                         mensaje.show();
-                        altaCall.enqueue(new Callback<Producto>() {
+                       /* altaCall.enqueue(new Callback<Producto>() {
                             @Override
                             public void onResponse(Call<Producto> call, Response<Producto> response) {
 
@@ -264,8 +265,11 @@ public class GestionProductoActivity extends AppCompatActivity{
                             public void onFailure(Call<Producto> call, Throwable t) {
 
                             }
-                        });
-
+                        });*/
+                           }
+                       };
+                        Thread Hilo = new Thread(runnable);
+                       Hilo.start();
 
 
                     }
@@ -279,12 +283,6 @@ public class GestionProductoActivity extends AppCompatActivity{
 
 
                 }
-
-
-
-
-
-
 
                 Intent i= new Intent(GestionProductoActivity.this, MainActivity.class);
                 startActivity(i);
@@ -346,27 +344,27 @@ public class GestionProductoActivity extends AppCompatActivity{
        @Override
        public void onClick(View v) {
 
-          // int [] arregloIds= new int[0];
+          int [] arregloIds= new int[0];
            int id=Integer.valueOf(idProductoBuscar.getText().toString());
-            //arregloIds[0] = id;
-          /* Producto retorno = (Producto) prodDao.loadAllByIds(arregloIds);
+            arregloIds[0] = id;
+           Producto retorno = (Producto) prodDao.loadAllByIds(arregloIds);
 
            nombreProducto.setText(retorno.getNombre());
 
            descProducto.setText(retorno.getDescripcion());
            precioProducto.setText(retorno.getPrecio().toString());
-*/
 
-           ProductoRetrofit clienteRest = RestClient.getInstance()
+
+          /* ProductoRetrofit clienteRest = RestClient.getInstance()
                    .getRetrofit()
                    .create(ProductoRetrofit.class);
+*/
 
 
+  //  final Call<Producto> alta = clienteRest.buscarProductoPorId(id);
 
-    final Call<Producto> alta = clienteRest.buscarProductoPorId(id);
 
-
-           alta.enqueue(new Callback<Producto>() {
+         /*  alta.enqueue(new Callback<Producto>() {
                @Override
                public void onResponse(Call<Producto> call, Response<Producto> response) {
 
@@ -407,7 +405,7 @@ public class GestionProductoActivity extends AppCompatActivity{
 
 
 
-       });
+       });*/
    }
 
 

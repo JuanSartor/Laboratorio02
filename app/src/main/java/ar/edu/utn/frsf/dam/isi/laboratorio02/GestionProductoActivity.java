@@ -84,6 +84,7 @@ public class GestionProductoActivity extends AppCompatActivity{
         prodDao= MyDb.getInstance(context).getProductoDao();
 
 
+
         Runnable nuevoHilo = new Runnable() {
             @Override
             public void run() {
@@ -159,12 +160,12 @@ public class GestionProductoActivity extends AppCompatActivity{
 
 
         btnGuardar.setOnClickListener(new View.OnClickListener(){
-            @Override public void onClick(View v){
+            @Override
+            public void onClick(View v){
 
-              /*  ProductoRetrofit clienteRest = RestClient.getInstance()
-                        .getRetrofit()
-                        .create(ProductoRetrofit.class);
-*/
+              // ProductoRetrofit clienteRest = RestClient.getInstance()
+               //         .getRetrofit()
+                 //       .create(ProductoRetrofit.class);
 
                 if(flagActualizacion){
                     int id=Integer.valueOf(idProductoBuscar.getText().toString());
@@ -222,30 +223,43 @@ public class GestionProductoActivity extends AppCompatActivity{
 
                 }
                 else{
-             //   final Call<Producto> altaCall= clienteRest.crearProducto(nuevo_producto);
+
+              //final Call<Producto> altaCall= clienteRest.crearProducto(nuevo_producto);
 
 
                     if((nombreProducto.getText()!=null)&&(descProducto.getText()!=null)&&(precioProducto.getText()!=null&&(cat_seleccionada!=null))){
 
+                        final Producto nuevo_producto = new Producto();
                        Runnable runnable = new Runnable() {
                            @Override
                            public void run() {
 
 
-                        final Producto nuevo_producto = new Producto();
-
                         nuevo_producto.setNombre(nombreProducto.getText().toString());
                         nuevo_producto.setDescripcion(descProducto.getText().toString());
                         nuevo_producto.setPrecio(Double.valueOf(precioProducto.getText().toString()));
-                        nuevo_producto.setCategoria(cat_seleccionada);
+                       nuevo_producto.setCategoria(cat_seleccionada);
+
+
 
 
                         prodDao.insertAll(nuevo_producto);
 
-                        Toast mensaje = Toast.makeText(getApplicationContext(),
-                                "Se ha cargado un nuevo producto!", Toast.LENGTH_SHORT);
+
+                               Runnable r2 = new Runnable() {
+                                   @Override
+                                   public void run() {
+
+
+                       Toast mensaje = Toast.makeText(getApplicationContext(),
+                             "Se ha cargado un nuevo producto!", Toast.LENGTH_SHORT);
                         mensaje.show();
-                       /* altaCall.enqueue(new Callback<Producto>() {
+                                   }
+                               };
+                               nombreProducto.post(r2);
+
+
+                     /*   altaCall.enqueue(new Callback<Producto>() {
                             @Override
                             public void onResponse(Call<Producto> call, Response<Producto> response) {
 
@@ -257,23 +271,31 @@ public class GestionProductoActivity extends AppCompatActivity{
 
 
                                 }
-                                else{}
+                                else{ Toast mensaje = Toast.makeText(getApplicationContext(),
+                                        "No se ha podido realizar la Operacion exitosamente!", Toast.LENGTH_SHORT);
+                                    mensaje.show();}
 
                             }
 
                             @Override
                             public void onFailure(Call<Producto> call, Throwable t) {
 
+                                Toast mensaje = Toast.makeText(getApplicationContext(),
+                                        "FALLAAAAA!!!  No se ha podido realizar la Operacion exitosamente!", Toast.LENGTH_SHORT);
+                                mensaje.show();
                             }
                         });*/
                            }
                        };
-                        Thread Hilo = new Thread(runnable);
+                       Thread Hilo = new Thread(runnable);
                        Hilo.start();
 
+                        nombreProducto.setText("");
+                        descProducto.setText("");
+                        precioProducto.setText("");
 
                     }
-                    else{
+                   else{
 
                         Toast mensaje = Toast.makeText(getApplicationContext(),
                                 "Por favor, complete todos los campos!", Toast.LENGTH_SHORT);
@@ -282,10 +304,10 @@ public class GestionProductoActivity extends AppCompatActivity{
                     }
 
 
+
                 }
 
-                Intent i= new Intent(GestionProductoActivity.this, MainActivity.class);
-                startActivity(i);
+
 
             }
         });

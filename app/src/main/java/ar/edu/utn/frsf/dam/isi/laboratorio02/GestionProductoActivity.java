@@ -227,7 +227,7 @@ public class GestionProductoActivity extends AppCompatActivity{
               //final Call<Producto> altaCall= clienteRest.crearProducto(nuevo_producto);
 
 
-                    if((nombreProducto.getText()!=null)&&(descProducto.getText()!=null)&&(precioProducto.getText()!=null&&(cat_seleccionada!=null))){
+                    if((nombreProducto.getText().length()!=0)&&(descProducto.getText().length()!=0)&&(precioProducto.getText().length()!=0&&(cat_seleccionada!=null))){
 
                         final Producto nuevo_producto = new Producto();
                        Runnable runnable = new Runnable() {
@@ -295,6 +295,10 @@ public class GestionProductoActivity extends AppCompatActivity{
                         precioProducto.setText("");
 
                     }
+                    /**
+                     * TEST
+                     *
+                     * */
                    else{
 
                         Toast mensaje = Toast.makeText(getApplicationContext(),

@@ -63,19 +63,11 @@ public class RestoMessagingService extends FirebaseMessagingService {
             e.printStackTrace();
         }
         if (id != -1 && estado != null) {
-
             PedidoRepository pr = new PedidoRepository();
             Pedido p = pr.buscarPorId(id);
             p.setEstado(estado);
-
-            sendNotification(uriEstado,id);
-        }
-
-
-
-
+            sendNotification(uriEstado,id);}
     }
-
     private void sendNotification(String estado, int id){
         Intent i = new Intent(RestoMessagingService.this, EstadoPedidoReciver.class);
         i.setAction(estado);

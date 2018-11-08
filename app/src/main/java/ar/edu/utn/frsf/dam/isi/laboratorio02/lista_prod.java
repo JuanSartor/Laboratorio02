@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.List;
+
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 
@@ -35,63 +37,86 @@ public class lista_prod extends AppCompatActivity {
 
         /*Se inicializan las variables*/
         final Intent intentExtras = getIntent();
-        final Context context = this;
-        repositorio = new ProductoRepository();
         btnProdAddPedido = (Button) findViewById(R.id.btnProdAddPedido);
-        spinnerCategoria = (Spinner) findViewById(R.id.cmbProductosCategoria);
         edtProdCant = (EditText) findViewById(R.id.edtProdCantidad);
-        adapterCategoria = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item,repositorio.getCategorias());
-        listaProductos = (ListView) findViewById(R.id.lstProductos);
 
         //Habilitar o deshabilitar boton y campo cantidad de acuerdo a punto de llamada
-        if (intentExtras.getExtras().getInt("NUEVO_PEDIDO")==0) {
+        if (intentExtras.getExtras().getInt("NUEVO_PEDIDO") == 0) {
             btnProdAddPedido.setEnabled(false);
-            edtProdCant.setEnabled(false);}
-        else {
+            edtProdCant.setEnabled(false);
+        } else {
             btnProdAddPedido.setEnabled(true);
-            edtProdCant.setEnabled(true);}
+            edtProdCant.setEnabled(true);
+        }
 
-        /*Se definen parametros de preferencia para el spinner*/
-        adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategoria.setAdapter(adapterCategoria);
+        final Context context = this;
+        repositorio = new ProductoRepository();
 
-        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        Runnable codeHilo = new Runnable() {    //agregado para ejecutar en hilo aparte la carga de combobox y lista
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                adapterProducto = new productoAdapter(context,
-                        repositorio.buscarPorCategoria((Categoria) (adapterView.getItemAtPosition(i))));
-                listaProductos.setAdapter(adapterProducto);
-                listaProductos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void run() {
+                CategoriaRest cr = new CategoriaRest();
+                final List<Categoria> listaCategorias = cr.listarTodas();     //obteniendo lista categorias de servidor
+
+                runOnUiThread(new Runnable() {      //para ejecutar lo relativo a interfaz en hilo principal (de UI)
                     @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        adapterProducto.setSelectedIndex(i);
-                        adapterProducto.notifyDataSetChanged();
-                    }
-                }
-                );
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
+                    public void run() {
+                        spinnerCategoria = (Spinner) findViewById(R.id.cmbProductosCategoria);
 
-        btnProdAddPedido.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Integer.parseInt(edtProdCant.getText().toString())>0){
-                Intent salida = new Intent();
-                salida.putExtra("cantidad", Integer.parseInt(edtProdCant.getText().toString()));
-                salida.putExtra("idProducto",adapterProducto.getProductoSeleccionado().getId());
-                setResult(Activity.RESULT_OK, salida);
-                finish();}
-                else {
-                    Toast mensaje = Toast.makeText(getApplicationContext(),
-                            "No se puede pedir 0 unidades!", Toast.LENGTH_SHORT);
-                    mensaje.show();
-                }
-            }
+                        //version antigua usando repositorio en app
+                        //adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,repositorio.getCategorias());
 
-        });
+                        adapterCategoria = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaCategorias);
+
+                        listaProductos = (ListView) findViewById(R.id.lstProductos);
+
+                        /*Se definen parametros de preferencia para el spinner*/
+                        adapterCategoria.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinnerCategoria.setAdapter(adapterCategoria);
+
+                        spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                adapterProducto = new productoAdapter(context,
+                                        repositorio.buscarPorCategoria((Categoria) (adapterView.getItemAtPosition(i))));
+                                listaProductos.setAdapter(adapterProducto);
+                                listaProductos.setOnItemClickListener(
+                                        new AdapterView.OnItemClickListener() {
+                                            @Override
+                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                adapterProducto.setSelectedIndex(i);
+                                                adapterProducto.notifyDataSetChanged();
+                                            }
+                                        }
+                                );
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {
+                            }
+                        });
+
+                        btnProdAddPedido.setOnClickListener(new Button.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (Integer.parseInt(edtProdCant.getText().toString()) > 0) {
+                                    Intent salida = new Intent();
+                                    salida.putExtra("cantidad", Integer.parseInt(edtProdCant.getText().toString()));
+                                    salida.putExtra("idProducto", adapterProducto.getProductoSeleccionado().getId());
+                                    setResult(Activity.RESULT_OK, salida);
+                                    finish();
+                                } else {
+                                    Toast mensaje = Toast.makeText(getApplicationContext(),
+                                            "No se puede pedir 0 unidades!", Toast.LENGTH_SHORT);
+                                    mensaje.show();
+                                }
+                            }
+
+                        });
+                    }});
+        }};
+        Thread hiloCombos = new Thread(codeHilo);
+        hiloCombos.start();
     }
 
 }

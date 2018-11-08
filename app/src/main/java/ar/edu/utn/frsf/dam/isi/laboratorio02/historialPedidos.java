@@ -39,7 +39,8 @@ public class historialPedidos extends AppCompatActivity {
         btnHistorialMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                Intent i = new Intent(historialPedidos.this, MainActivity.class);
+                startActivity(i);
             }
         });
 

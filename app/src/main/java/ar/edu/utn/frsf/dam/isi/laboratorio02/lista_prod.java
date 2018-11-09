@@ -18,8 +18,10 @@ import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.CategoriaDao;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDb;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoDao;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class lista_prod extends AppCompatActivity {
     /*Se definen las variables a utilizar*/
@@ -31,6 +33,7 @@ public class lista_prod extends AppCompatActivity {
     private Button btnProdAddPedido;
     private EditText edtProdCant;
     private CategoriaDao catDao;
+    private ProductoDao proDao;
 
 
     @Override
@@ -44,6 +47,7 @@ public class lista_prod extends AppCompatActivity {
         edtProdCant = (EditText) findViewById(R.id.edtProdCantidad);
 
         catDao= MyDb.getInstance(this).getCategoriaDao();
+       proDao= MyDb.getInstance(this).getProductoDao();
 
         //Habilitar o deshabilitar boton y campo cantidad de acuerdo a punto de llamada
         if (intentExtras.getExtras().getInt("NUEVO_PEDIDO") == 0) {
@@ -83,9 +87,22 @@ public class lista_prod extends AppCompatActivity {
 
                         spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
-                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                                adapterProducto = new productoAdapter(context,
-                                        repositorio.buscarPorCategoria((Categoria) (adapterView.getItemAtPosition(i))));
+                            public void onItemSelected(final AdapterView<?> adapterView, View view, final int i, long l) {
+
+
+                                List<Producto> listaaa = proDao.loadProdByCat(((Categoria) (adapterView.getItemAtPosition(i))).getId());
+
+                                if(listaaa.size()>0 ){
+
+                                    Toast mensaje = Toast.makeText(getApplicationContext(),
+                                            "Operacionasdsadsadsadsdsalziada exitosamente!", Toast.LENGTH_SHORT);
+                                    mensaje.show();
+
+                                }
+
+                                //adapterProducto = new productoAdapter(context,
+
+                                    //  proDao.loadProdByCat(((Categoria) (adapterView.getItemAtPosition(i))).getId()));
                                 listaProductos.setAdapter(adapterProducto);
                                 listaProductos.setOnItemClickListener(
                                         new AdapterView.OnItemClickListener() {
@@ -96,7 +113,10 @@ public class lista_prod extends AppCompatActivity {
                                             }
                                         }
                                 );
+
                             }
+
+
 
                             @Override
                             public void onNothingSelected(AdapterView<?> adapterView) {

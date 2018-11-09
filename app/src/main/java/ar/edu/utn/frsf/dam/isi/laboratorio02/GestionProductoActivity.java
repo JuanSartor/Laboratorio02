@@ -78,7 +78,9 @@ public class GestionProductoActivity extends AppCompatActivity{
 
 
 
-
+        nombreProducto.setText("");
+        descProducto.setText("");
+        precioProducto.setText("");
        catDao= MyDb.getInstance(context).getCategoriaDao();
 
         prodDao= MyDb.getInstance(context).getProductoDao();
@@ -167,6 +169,10 @@ public class GestionProductoActivity extends AppCompatActivity{
                //         .getRetrofit()
                  //       .create(ProductoRetrofit.class);
 
+
+
+
+
                 if(flagActualizacion){
                     int id=Integer.valueOf(idProductoBuscar.getText().toString());
                //     final Call<Producto> altaCall= clienteRest.actualizarProducto(id,nuevo_producto);
@@ -176,7 +182,7 @@ public class GestionProductoActivity extends AppCompatActivity{
                        Producto actualizar_producto= new Producto();
                        actualizar_producto=(Producto) prodDao.loadAllByIds(arr).get(1);
 
-                    if((nombreProducto.getText()!=null)&&(descProducto.getText()!=null)&&(precioProducto.getText()!=null&&(cat_seleccionada!=null))){
+                    if((nombreProducto.getText().length()!=0)&&(descProducto.getText().length()!=0)&&(precioProducto.getText().length()!=0&&(cat_seleccionada!=null))){
 
                        actualizar_producto.setNombre(nombreProducto.getText().toString());
                        actualizar_producto.setDescripcion(descProducto.getText().toString());

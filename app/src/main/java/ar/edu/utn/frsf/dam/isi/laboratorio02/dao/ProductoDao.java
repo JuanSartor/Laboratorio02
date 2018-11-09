@@ -20,6 +20,10 @@ public interface ProductoDao {
   @Query("SELECT * FROM Productos WHERE id IN (:productoIds)")
    List<Producto> loadAllByIds(int[] productoIds);
 
+  @Query("SELECT * FROM Productos WHERE cat_id IN (:categoriaId)")
+  List<Producto> loadProdByCat (int categoriaId);
+
+
 
     @Insert
     void insertAll(Producto... producto);

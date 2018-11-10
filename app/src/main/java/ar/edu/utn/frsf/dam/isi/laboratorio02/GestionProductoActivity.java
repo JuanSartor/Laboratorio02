@@ -180,6 +180,7 @@ public class GestionProductoActivity extends AppCompatActivity{
                        int [] arr= new int[1];
                         arr[1]=id;
                        Producto actualizar_producto= new Producto();
+
                        actualizar_producto=(Producto) prodDao.loadAllByIds(arr).get(1);
 
                     if((nombreProducto.getText().length()!=0)&&(descProducto.getText().length()!=0)&&(precioProducto.getText().length()!=0&&(cat_seleccionada!=null))){
@@ -296,9 +297,7 @@ public class GestionProductoActivity extends AppCompatActivity{
                        Thread Hilo = new Thread(runnable);
                        Hilo.start();
 
-                        nombreProducto.setText("");
-                        descProducto.setText("");
-                        precioProducto.setText("");
+
 
                     }
                     /**
@@ -376,15 +375,31 @@ public class GestionProductoActivity extends AppCompatActivity{
        @Override
        public void onClick(View v) {
 
-          int [] arregloIds= new int[0];
+          final int [] arregloIds= new int[1];
            int id=Integer.valueOf(idProductoBuscar.getText().toString());
             arregloIds[0] = id;
-           Producto retorno = (Producto) prodDao.loadAllByIds(arregloIds);
 
-           nombreProducto.setText(retorno.getNombre());
+           Runnable r = new Runnable() {
+               @Override
+               public void run() {
+                  final Producto retorno = (Producto) prodDao.loadAllByIds(arregloIds).get(0);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            nombreProducto.setText(retorno.getNombre());
 
-           descProducto.setText(retorno.getDescripcion());
-           precioProducto.setText(retorno.getPrecio().toString());
+                            descProducto.setText(retorno.getDescripcion());
+                            precioProducto.setText(retorno.getPrecio().toString());
+                        }
+                    });
+               }
+           };
+
+           Thread t = new Thread(r);
+           t.start();
+
+
+
 
 
           /* ProductoRetrofit clienteRest = RestClient.getInstance()

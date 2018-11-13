@@ -64,8 +64,8 @@ public class lista_prod extends AppCompatActivity {
         Runnable codeHilo = new Runnable() {    //agregado para ejecutar en hilo aparte la carga de combobox y lista
             @Override
             public void run() {
-                //CategoriaRest cr = new CategoriaRest();
-               // final List<Categoria> listaCategorias = cr.listarTodas();     //obteniendo lista categorias de servidor
+
+
                     final List<Categoria> listaCategorias= catDao.getAll();
 
 
@@ -74,8 +74,7 @@ public class lista_prod extends AppCompatActivity {
                     public void run() {
                         spinnerCategoria = (Spinner) findViewById(R.id.cmbProductosCategoria);
 
-                        //version antigua usando repositorio en app
-                        //adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,repositorio.getCategorias());
+
 
                         adapterCategoria = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaCategorias);
 
@@ -90,29 +89,37 @@ public class lista_prod extends AppCompatActivity {
                             public void onItemSelected(final AdapterView<?> adapterView, View view, final int i, long l) {
 
 
-                                List<Producto> listaaa = proDao.loadProdByCat(((Categoria) (adapterView.getItemAtPosition(i))).getId());
-
-                                if(listaaa.size()>0 ){
-
-                                    Toast mensaje = Toast.makeText(getApplicationContext(),
-                                            "Operacionasdsadsadsadsdsalziada exitosamente!", Toast.LENGTH_SHORT);
-                                    mensaje.show();
-
-                                }
-
-                                //adapterProducto = new productoAdapter(context,
-
-                                    //  proDao.loadProdByCat(((Categoria) (adapterView.getItemAtPosition(i))).getId()));
-                                listaProductos.setAdapter(adapterProducto);
-                                listaProductos.setOnItemClickListener(
-                                        new AdapterView.OnItemClickListener() {
+                                Runnable r = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                      final  List<Producto> listaaa = proDao.loadProdByCat(((Categoria) (adapterView.getItemAtPosition(i))).getId());
+                                        runOnUiThread(new Runnable() {
                                             @Override
-                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                                adapterProducto.setSelectedIndex(i);
-                                                adapterProducto.notifyDataSetChanged();
+                                            public void run() {
+                                                adapterProducto = new productoAdapter(context,listaaa);
+                                                listaProductos.setAdapter(adapterProducto);
+                                                listaProductos.setOnItemClickListener(
+                                                        new AdapterView.OnItemClickListener() {
+                                                            @Override
+                                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                                adapterProducto.setSelectedIndex(i);
+                                                                adapterProducto.notifyDataSetChanged();
+                                                            }
+                                                        }
+                                                );
+
+
                                             }
-                                        }
-                                );
+                                        });
+
+                                    }
+                                };
+        Thread t=new Thread(r);
+        t.start();
+
+
+
+
 
                             }
 

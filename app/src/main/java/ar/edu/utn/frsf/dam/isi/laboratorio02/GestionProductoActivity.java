@@ -167,7 +167,7 @@ public class GestionProductoActivity extends AppCompatActivity{
                 if(flagActualizacion){
 
 
-                                       if((idProductoBuscar.getText().length()!=0)&&(nombreProducto.getText().length()!=0)&&(descProducto.getText().length()!=0)&&(precioProducto.getText().length()!=0&&(cat_seleccionada!=null))){
+                                       if((idProductoBuscar.getText().length()!=0)&&(nombreProducto.getText().length()!=0)&&(descProducto.getText().length()!=0)&&(precioProducto.getText().length()!=0)&&(cat_seleccionada.getNombre()!=null)){
 
                                            int id=Integer.valueOf(idProductoBuscar.getText().toString());
                                            final int [] arr= new int[1];
@@ -225,7 +225,7 @@ public class GestionProductoActivity extends AppCompatActivity{
 
 
 
-                    if((nombreProducto.getText().length()!=0)&&(descProducto.getText().length()!=0)&&(precioProducto.getText().length()!=0&&(cat_seleccionada!=null))){
+                    if((nombreProducto.getText().length()!=0)&&(descProducto.getText().length()!=0)&&(precioProducto.getText().length()!=0)&&(cat_seleccionada.getNombre()!=null)){
 
                         final Producto nuevo_producto = new Producto();
                        Runnable runnable = new Runnable() {
@@ -290,16 +290,29 @@ public class GestionProductoActivity extends AppCompatActivity{
        @Override
        public void onClick(View v) {
 
-           int id=Integer.valueOf(idProductoBuscar.getText().toString());
-           final int[] arrePar= new int[1];
-            arrePar[0]=id;
+
 
             if((idProductoBuscar.getText().length()!=0)&&(idProductoBuscar.getText()!=null)) {
                 Runnable r = new Runnable() {
                     @Override
                     public void run() {
-                        Producto proAeliminar = prodDao.loadAllByIds(arrePar).get(0);
+                        int id=Integer.valueOf(idProductoBuscar.getText().toString());
+                        final int[] arrePar= new int[1];
+                        arrePar[0]=id;
+                       List<Producto>  lisPro = prodDao.loadAllByIds(arrePar);
+
+                       if(lisPro.size()>0){
+                           Producto proAeliminar = lisPro.get(0);
                         prodDao.delete(proAeliminar);
+                           Intent i= new Intent(GestionProductoActivity.this, MainActivity.class);
+                           startActivity(i);
+                       }
+                        else{
+                           Toast mensaje = Toast.makeText(getApplicationContext(),
+                                   "Seleccione un id valido", Toast.LENGTH_SHORT);
+                           mensaje.show();
+
+                       }
                     }
                 };
                 Thread t = new Thread(r);
@@ -316,8 +329,7 @@ public class GestionProductoActivity extends AppCompatActivity{
             }
 
 
-           Intent i= new Intent(GestionProductoActivity.this, MainActivity.class);
-           startActivity(i);
+
        }
    });
 
@@ -337,27 +349,38 @@ public class GestionProductoActivity extends AppCompatActivity{
     Runnable r = new Runnable() {
         @Override
         public void run() {
-            final Producto retorno = (Producto) prodDao.loadAllByIds(arregloIds).get(0);
+
+            final List<Producto>  retorno =  prodDao.loadAllByIds(arregloIds);
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    nombreProducto.setText(retorno.getNombre());
+                    if(retorno.size()>0){
+                        idProductoBuscar.setEnabled(false);
+                    Producto pro= retorno.get(0);
+                    nombreProducto.setText(pro.getNombre());
+                    descProducto.setText(pro.getDescripcion());
+                    precioProducto.setText(pro.getPrecio().toString());
+                    comboCategorias.setSelection(comboAdapter.getPosition(pro.getCategoria()));
 
-                    descProducto.setText(retorno.getDescripcion());
-                    precioProducto.setText(retorno.getPrecio().toString());
+                }
+
+                    else {
+                        Toast mensaje = Toast.makeText(getApplicationContext(),
+                                "Seleccione un id valido", Toast.LENGTH_SHORT);
+                        mensaje.show();
+                    }
                 }
             });
+
+
         }
     };
 
     Thread t = new Thread(r);
     t.start();
 
-
-
            }
-
 
            else{
                Toast mensaje = Toast.makeText(getApplicationContext(),

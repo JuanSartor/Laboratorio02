@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btnConfiguracion;
     private Button btnCategorias;
     private Button btnGestorProducto;
-    private Button btnBorrarBD;
-    private MyDb instancia;
+    private Button btnGestorBD;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         createNotificationChannel();
 
-        instancia= MyDb.getInstance(this);
+        ;
 
 
         Log.d("TOKEN!!!", FirebaseInstanceId.getInstance().getToken());
@@ -123,27 +123,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        btnBorrarBD=(Button) findViewById(R.id.btnBorrarBd);
-        btnBorrarBD.setOnClickListener(new View.OnClickListener() {
+        btnGestorBD=(Button) findViewById(R.id.btnGestorBd);
+        btnGestorBD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent i= new Intent(MainActivity.this, GestorBDActivity.class);
+                startActivity(i);
 
-                Runnable rBorrar=new Runnable() {
-                    @Override
-                    public void run() {
-                        instancia.borrarTodo();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                Toast.makeText(MainActivity.this,"Se ha borrado la Base de Datos",Toast.LENGTH_LONG).show();
-                            }
-                        });
-                    }
-                };
-
-                Thread t4 = new Thread(rBorrar);
-                t4.start();
             }
         });
 

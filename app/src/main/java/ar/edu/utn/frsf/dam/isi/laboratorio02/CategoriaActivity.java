@@ -35,13 +35,16 @@ public class CategoriaActivity extends AppCompatActivity {
             public void onClick(View v) {
             // completar el codigo en el paso “g”
                // final CategoriaRest cr = new CategoriaRest();
+                if(nombreCat.getText().length()>0){
+
                 Runnable r=new Runnable() {
                     @Override
                     public void run() {
+
                        final  Categoria cat= new Categoria(nombreCat.getText().toString());
 
                         catDao.insertAll(cat);
-                 //      cr.crearCategoria(cat);
+
                         Runnable r2=new Runnable() {
                             @Override
                             public void run() {
@@ -52,10 +55,20 @@ public class CategoriaActivity extends AppCompatActivity {
                             }
                         };
                         nombreCat.post(r2);
+
+
                     }
+
                 };
                 Thread segundoHilo = new Thread(r);
-                segundoHilo.start();
+                segundoHilo.start();}
+
+
+                else{
+                    Toast.makeText(CategoriaActivity.this,
+                            "Ingrese un nombre!",
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
 

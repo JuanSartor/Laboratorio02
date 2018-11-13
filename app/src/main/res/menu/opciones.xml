@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/mnuConsultarCategorias" android:title="Consulta Categorias" app:showAsAction="never"></item>
+    <item android:id="@+id/mnuConsultarProductos" android:title="Consulta Productos" app:showAsAction="never"></item>
+    <item android:id="@+id/mnuBorrarTodo" android:title="Borrar Base de Datos" app:showAsAction="never"></item>
+</menu>

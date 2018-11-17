@@ -71,7 +71,8 @@
 
         <activity android:name=".PreferenciasCompartidas" />
         <activity android:name=".CategoriaActivity" />
-        <activity android:name=".GestionProductoActivity"></activity>
+        <activity android:name=".GestionProductoActivity" />
+        <activity android:name=".GestorBDActivity"></activity>
     </application>
 
 </manifest>

@@ -1,18 +1,38 @@
 package ar.edu.utn.frsf.dam.isi.laboratorio02.modelo;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.util.Objects;
 
+import io.reactivex.annotations.NonNull;
+
+@Entity(tableName = "Productos")
 public class Producto {
 
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
     private Integer id;
+
+    @NonNull
+    @ColumnInfo(name = "nombre")
     private String nombre;
+    @ColumnInfo(name = "descripcion")
     private String descripcion;
+    @NonNull
+    @ColumnInfo(name = "precio")
     private Double precio;
+
+   @Embedded(prefix = "cat_")
     private Categoria categoria;
 
     public Producto() {
     }
 
+    @Ignore
     public Producto(String nombre, String descripcion, Double precio, Categoria categoria) {
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -20,12 +40,14 @@ public class Producto {
         this.categoria = categoria;
     }
 
+    @Ignore
     public Producto(String nombre, Double precio, Categoria categoria) {
         this.nombre = nombre;
         this.precio = precio;
         this.categoria = categoria;
     }
 
+    @Ignore
     public Producto(Integer id, String nombre, String descripcion, Double precio, Categoria categoria) {
         this.id = id;
         this.nombre = nombre;

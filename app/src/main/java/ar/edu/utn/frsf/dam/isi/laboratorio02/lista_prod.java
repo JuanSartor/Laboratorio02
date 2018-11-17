@@ -18,8 +18,10 @@ import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.CategoriaDao;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDb;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoDao;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class lista_prod extends AppCompatActivity {
     /*Se definen las variables a utilizar*/
@@ -31,6 +33,7 @@ public class lista_prod extends AppCompatActivity {
     private Button btnProdAddPedido;
     private EditText edtProdCant;
     private CategoriaDao catDao;
+    private ProductoDao proDao;
 
 
     @Override
@@ -44,6 +47,7 @@ public class lista_prod extends AppCompatActivity {
         edtProdCant = (EditText) findViewById(R.id.edtProdCantidad);
 
         catDao= MyDb.getInstance(this).getCategoriaDao();
+       proDao= MyDb.getInstance(this).getProductoDao();
 
         //Habilitar o deshabilitar boton y campo cantidad de acuerdo a punto de llamada
         if (intentExtras.getExtras().getInt("NUEVO_PEDIDO") == 0) {
@@ -60,8 +64,8 @@ public class lista_prod extends AppCompatActivity {
         Runnable codeHilo = new Runnable() {    //agregado para ejecutar en hilo aparte la carga de combobox y lista
             @Override
             public void run() {
-                //CategoriaRest cr = new CategoriaRest();
-               // final List<Categoria> listaCategorias = cr.listarTodas();     //obteniendo lista categorias de servidor
+
+
                     final List<Categoria> listaCategorias= catDao.getAll();
 
 
@@ -70,8 +74,7 @@ public class lista_prod extends AppCompatActivity {
                     public void run() {
                         spinnerCategoria = (Spinner) findViewById(R.id.cmbProductosCategoria);
 
-                        //version antigua usando repositorio en app
-                        //adapterCategoria = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,repositorio.getCategorias());
+
 
                         adapterCategoria = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, listaCategorias);
 
@@ -83,20 +86,44 @@ public class lista_prod extends AppCompatActivity {
 
                         spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
-                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                                adapterProducto = new productoAdapter(context,
-                                        repositorio.buscarPorCategoria((Categoria) (adapterView.getItemAtPosition(i))));
-                                listaProductos.setAdapter(adapterProducto);
-                                listaProductos.setOnItemClickListener(
-                                        new AdapterView.OnItemClickListener() {
+                            public void onItemSelected(final AdapterView<?> adapterView, View view, final int i, long l) {
+
+
+                                Runnable r = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                      final  List<Producto> listaaa = proDao.loadProdByCat(((Categoria) (adapterView.getItemAtPosition(i))).getId());
+                                        runOnUiThread(new Runnable() {
                                             @Override
-                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                                adapterProducto.setSelectedIndex(i);
-                                                adapterProducto.notifyDataSetChanged();
+                                            public void run() {
+                                                adapterProducto = new productoAdapter(context,listaaa);
+                                                listaProductos.setAdapter(adapterProducto);
+                                                listaProductos.setOnItemClickListener(
+                                                        new AdapterView.OnItemClickListener() {
+                                                            @Override
+                                                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                                adapterProducto.setSelectedIndex(i);
+                                                                adapterProducto.notifyDataSetChanged();
+                                                            }
+                                                        }
+                                                );
+
+
                                             }
-                                        }
-                                );
+                                        });
+
+                                    }
+                                };
+        Thread t=new Thread(r);
+        t.start();
+
+
+
+
+
                             }
+
+
 
                             @Override
                             public void onNothingSelected(AdapterView<?> adapterView) {

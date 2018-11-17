@@ -15,8 +15,8 @@ public interface CategoriaDao {
    @Query("SELECT * FROM Categorias")
    List<Categoria> getAll();
 
-   // @Query("SELECT * FROM categoria WHERE id IN (:categoriaIds)")
-   // List<Categoria> loadAllByIds(int[] categoriaIds);
+    @Query("SELECT * FROM Categorias WHERE id IN (:categoriaIds)")
+    List<Categoria> loadAllByIds(int[] categoriaIds);
 
 
     @Insert

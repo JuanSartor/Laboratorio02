@@ -9,7 +9,7 @@ import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 
-@Database(entities = {Categoria.class,Producto.class,Pedido.class,PedidoDetalle.class}, version = 1)
+@Database(entities = {Categoria.class,Producto.class,Pedido.class,PedidoDetalle.class}, version = 4)
 
 public abstract class AppBaseDatos extends RoomDatabase {
 

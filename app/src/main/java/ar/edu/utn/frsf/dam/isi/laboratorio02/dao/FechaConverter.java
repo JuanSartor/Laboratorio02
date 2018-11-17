@@ -2,7 +2,7 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02.dao;
 
 import android.arch.persistence.room.TypeConverter;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class FechaConverter {
     @TypeConverter

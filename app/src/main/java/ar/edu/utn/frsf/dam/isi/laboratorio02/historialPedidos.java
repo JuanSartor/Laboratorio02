@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDb;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDao;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
@@ -32,6 +33,7 @@ public class historialPedidos extends AppCompatActivity {
 
         final Context context = historialPedidos.this;
         //repositorio = new PedidoRepository();
+        pedidoDao = MyDb.getInstance(this).getPedidoDao();
 
         btnHistorialMenu = findViewById(R.id.btnHistorialMenu);
         btnHistorialNuevo = findViewById(R.id.btnHistorialNuevo);

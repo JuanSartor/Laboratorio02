@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDb;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDao;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
@@ -58,6 +59,7 @@ public class NuevoPedido extends AppCompatActivity {
 
         //*Se inicializan las variables*//*
         //repositorioPedido= new PedidoRepository();
+        pedidoDao = MyDb.getInstance(this).getPedidoDao();
         repositorioProducto= new ProductoRepository();
         radiogrupo= (RadioGroup) findViewById(R.id.optPedidoModoEntrega);
         direccion=(EditText) findViewById(R.id.edtPedidoDireccion);

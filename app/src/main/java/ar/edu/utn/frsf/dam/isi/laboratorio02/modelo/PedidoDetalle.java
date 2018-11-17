@@ -12,6 +12,7 @@ public class PedidoDetalle {
 
     private static int ID_DETALLE =1;
     @PrimaryKey (autoGenerate = true)
+    @ColumnInfo (name = "PedidoDetalleId")
     @NonNull
     private Integer id;
     @ColumnInfo (name = "Cantidad")

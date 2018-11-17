@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDao;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
@@ -33,7 +34,8 @@ public class NuevoPedido extends AppCompatActivity {
 
     /*Se definen las variables a utilizar*/
     private Pedido unPedido;
-    private PedidoRepository repositorioPedido;
+   // private PedidoRepository repositorioPedido;
+    private PedidoDao pedidoDao;
     private ProductoRepository repositorioProducto;
     private RadioGroup radiogrupo;
     private RadioButton optPedidoRetira;
@@ -55,7 +57,7 @@ public class NuevoPedido extends AppCompatActivity {
         setContentView(R.layout.activity_nuevo_pedido);
 
         //*Se inicializan las variables*//*
-        repositorioPedido= new PedidoRepository();
+        //repositorioPedido= new PedidoRepository();
         repositorioProducto= new ProductoRepository();
         radiogrupo= (RadioGroup) findViewById(R.id.optPedidoModoEntrega);
         direccion=(EditText) findViewById(R.id.edtPedidoDireccion);
@@ -78,7 +80,8 @@ public class NuevoPedido extends AppCompatActivity {
         // se debe completar la ventana con los datos del pedido que viene con el intent.
 
         if (intentExtras.getInt("origen")==1){
-            unPedido=repositorioPedido.buscarPorId(intentExtras.getInt("idPedido"));
+            //unPedido=repositorioPedido.buscarPorId(intentExtras.getInt("idPedido"));
+            unPedido = pedidoDao.getPedido(intentExtras.getInt("idPedido"));
 
             //seteo de campos de acuerdo al pedido
 
@@ -145,7 +148,8 @@ public class NuevoPedido extends AppCompatActivity {
                             e.printStackTrace();}
 
                         // buscar pedidos no aceptados y aceptarlos utomáticamente
-                        List<Pedido> lista = repositorioPedido.getLista();
+                        //List<Pedido> lista = repositorioPedido.getLista();
+                        List<Pedido> lista = pedidoDao.getAll();
                         for(Pedido p:lista){
                             if(p.getEstado().equals(Pedido.Estado.REALIZADO))
                                 p.setEstado(Pedido.Estado.ACEPTADO);
@@ -202,7 +206,8 @@ public class NuevoPedido extends AppCompatActivity {
                         unPedido.setRetirar(false);
                     else
                         unPedido.setRetirar(true);
-                    repositorioPedido.guardarPedido(unPedido);  //esto lo agrega al repositorio y le setea el id
+                    //repositorioPedido.guardarPedido(unPedido);  //esto lo agrega al repositorio y le setea el id
+                    pedidoDao.insertAll(unPedido); //esto lo agrega al repositorio y le setea el id
                     Log.d("ID_PEDIDO",String.valueOf(unPedido.getId()));
                     Intent i = new Intent(NuevoPedido.this, historialPedidos.class);
                     startActivity(i);

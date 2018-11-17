@@ -15,6 +15,8 @@ public class MyDb {
 
 
     private CategoriaDao daocategoria;
+    private PedidoDao pedidoDao;
+    private PedidoDetalleDao pedidoDetalleDao;
     private  AppBaseDatos db;
 
 
@@ -25,6 +27,8 @@ public class MyDb {
                 .fallbackToDestructiveMigration()
                 .build();
         daocategoria = db.categoriaDao();
+        pedidoDao = db.pedidoDao();
+        pedidoDetalleDao = db.pedidoDetalleDao();
 
     }
 
@@ -41,7 +45,19 @@ public class MyDb {
         this.daocategoria = catDao;
     }
 
+    public PedidoDao getPedidoDao() {
+        return pedidoDao;
+    }
 
+    public void setPedidoDao(PedidoDao pedidoDao) {
+        this.pedidoDao = pedidoDao;
+    }
 
+    public PedidoDetalleDao getPedidoDetalleDao() {
+        return pedidoDetalleDao;
+    }
 
+    public void setPedidoDetalleDao(PedidoDetalleDao pedidoDetalleDao) {
+        this.pedidoDetalleDao = pedidoDetalleDao;
+    }
 }

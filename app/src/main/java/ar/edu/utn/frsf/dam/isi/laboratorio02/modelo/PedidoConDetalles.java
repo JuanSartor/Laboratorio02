@@ -3,9 +3,12 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02.modelo;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Relation;
 
+import java.util.List;
+
 public class PedidoConDetalles {
     @Embedded
     public Pedido pedido;
-    //TODO terminar PedidoCOnDetalles
-    //@Relation(parentColumn = "id", entityColumn = )
+
+    @Relation(parentColumn = "id", entityColumn ="pedido", entity = PedidoDetalle.class)
+    public List<PedidoDetalle> detalles;
 }

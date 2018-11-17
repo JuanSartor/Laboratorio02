@@ -8,13 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.util.List;
+
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDao;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 
 public class historialPedidos extends AppCompatActivity {
 
 
     private ListView listaPedidos;
-    private PedidoRepository repositorio;
+    //private PedidoRepository repositorio;
+    private PedidoDao pedidoDao;
     private pedidoAdapter adapterPedido;
 
     public Button btnHistorialMenu;
@@ -26,13 +31,15 @@ public class historialPedidos extends AppCompatActivity {
         setContentView(R.layout.activity_historial_pedidos);
 
         final Context context = historialPedidos.this;
-        repositorio = new PedidoRepository();
+        //repositorio = new PedidoRepository();
 
         btnHistorialMenu = findViewById(R.id.btnHistorialMenu);
         btnHistorialNuevo = findViewById(R.id.btnHistorialNuevo);
         listaPedidos = findViewById(R.id.lstHistorialPedidos);
 
-        adapterPedido = new pedidoAdapter(context, repositorio.getLista());
+        //adapterPedido = new pedidoAdapter(context, repositorio.getLista());
+        List<Pedido> aux = pedidoDao.getAll();
+        adapterPedido = new pedidoAdapter(context, pedidoDao.getAll());
 
         listaPedidos.setAdapter(adapterPedido);
 

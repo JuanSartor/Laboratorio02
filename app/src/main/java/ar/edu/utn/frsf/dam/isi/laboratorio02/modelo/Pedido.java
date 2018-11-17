@@ -20,6 +20,7 @@ public class Pedido {
     public enum Estado { REALIZADO, ACEPTADO, RECHAZADO,EN_PREPARACION,LISTO,ENTREGADO,CANCELADO}
 
     @PrimaryKey (autoGenerate = true)
+    @ColumnInfo (name = "PedidoId")
     @NonNull
     private Integer id;
     @ColumnInfo (name = "Fecha")

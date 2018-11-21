@@ -9,6 +9,7 @@ public class PedidoConDetalles {
     @Embedded
     public Pedido pedido;
 
-    @Relation(parentColumn = "id", entityColumn ="pedido", entity = PedidoDetalle.class)
+    @Relation(parentColumn = "id", entityColumn ="ped_id", entity = PedidoDetalle.class)
     public List<PedidoDetalle> detalles;
+
 }

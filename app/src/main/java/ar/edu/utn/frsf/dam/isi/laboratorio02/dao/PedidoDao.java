@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoConDetalles;
 
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -16,11 +17,14 @@ public interface PedidoDao {
     @Query("SELECT * FROM Pedidos")
     List<Pedido> getAll();
 
-    @Query("SELECT * FROM Pedidos WHERE PedidoId = :identificador")
-    Pedido getPedido(int identificador);
+    @Query("SELECT * FROM Pedidos WHERE id = :identificador")
+    Pedido getPedido(long identificador);
+
+    @Query("SELECT * FROM Pedidos WHERE id = :idPedido")
+    List<PedidoConDetalles> buscarPedidoConDetallePorId(long idPedido);
 
     @Insert
-    void insertAll(Pedido... pedido);
+    long insert(Pedido pedido);
 
     @Delete
     void delete(Pedido pedido);

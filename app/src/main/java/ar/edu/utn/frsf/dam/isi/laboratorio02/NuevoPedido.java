@@ -2,11 +2,14 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.Activity;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,10 +29,14 @@ import java.util.List;
 
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDb;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDao;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDetalleDao;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoDao;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.ProductoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoConDetalles;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Producto;
 
 public class NuevoPedido extends AppCompatActivity {
 
@@ -37,6 +44,8 @@ public class NuevoPedido extends AppCompatActivity {
     private Pedido unPedido;
    // private PedidoRepository repositorioPedido;
     private PedidoDao pedidoDao;
+    private PedidoDetalleDao pedidoDetalleDao;
+    private ProductoDao productoDao;
     private ProductoRepository repositorioProducto;
     private RadioGroup radiogrupo;
     private RadioButton optPedidoRetira;
@@ -52,14 +61,20 @@ public class NuevoPedido extends AppCompatActivity {
     private TextView lblTotalPedido;
     private detallePedidoAdapter adaptador;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_pedido);
 
+        final Context context = this;
+
         //*Se inicializan las variables*//*
         //repositorioPedido= new PedidoRepository();
-        pedidoDao = MyDb.getInstance(this).getPedidoDao();
+        pedidoDao = MyDb.getInstance(context).getPedidoDao();
+        productoDao = MyDb.getInstance(context).getProductoDao();
+        pedidoDetalleDao = MyDb.getInstance(context).getPedidoDetalleDao();
+
         repositorioProducto= new ProductoRepository();
         radiogrupo= (RadioGroup) findViewById(R.id.optPedidoModoEntrega);
         direccion=(EditText) findViewById(R.id.edtPedidoDireccion);
@@ -83,25 +98,42 @@ public class NuevoPedido extends AppCompatActivity {
 
         if (intentExtras.getInt("origen")==1){
             //unPedido=repositorioPedido.buscarPorId(intentExtras.getInt("idPedido"));
-            unPedido = pedidoDao.getPedido(intentExtras.getInt("idPedido"));
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    unPedido = pedidoDao.getPedido(intentExtras.getLong("idPedido"));
+                    List<PedidoConDetalles> pedidoConDetalles = pedidoDao.buscarPedidoConDetallePorId(unPedido.getId());
+                    unPedido.setDetalle(pedidoConDetalles.get(0).detalles);
 
-            //seteo de campos de acuerdo al pedido
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            //seteo de campos de acuerdo al pedido
 
-            direccionCorreo.setText(unPedido.getMailContacto());
-            if (unPedido.getRetirar())
-                optPedidoRetira.setChecked(true);
-            else
-                optPedidoEnviar.setChecked(true);
-            direccion.setText(unPedido.getDireccionEnvio());
+                            direccionCorreo.setText(unPedido.getMailContacto());
+                            if (unPedido.getRetirar())
+                                optPedidoRetira.setChecked(true);
+                            else
+                                optPedidoEnviar.setChecked(true);
+                            direccion.setText(unPedido.getDireccionEnvio());
 
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-            edtPedidoHoraEntrega.setText(sdf.format(unPedido.getFecha()));
+                            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+                            edtPedidoHoraEntrega.setText(sdf.format(unPedido.getFecha()));
 
-            lblTotalPedido.setText(getString(R.string.totalPedido)+String.valueOf(unPedido.total()));
+                            lblTotalPedido.setText(getString(R.string.totalPedido)+String.valueOf(unPedido.total()));
 
-            btnPedidoAddProducto.setEnabled(false);     //se deshabilitan estos botones porque el enunciado no dice
-            btnPedidoQuitarProducto.setEnabled(false);  // nada de que se puedan modificar los pedidos desde el
-            btnPedidoHacerPedido.setEnabled(false);     // historial, se debe cancelar el pedido y hacer otro.
+                            btnPedidoAddProducto.setEnabled(false);     //se deshabilitan estos botones porque el enunciado no dice
+                            btnPedidoQuitarProducto.setEnabled(false);  // nada de que se puedan modificar los pedidos desde el
+                            btnPedidoHacerPedido.setEnabled(false);     // historial, se debe cancelar el pedido y hacer otro.
+
+                            adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
+                            listaDetalles.setAdapter(adaptador);
+                        }
+                    });
+                }
+            });
+
+
         }
         else{
 
@@ -113,10 +145,14 @@ public class NuevoPedido extends AppCompatActivity {
                 optPedidoEnviar.setChecked(true);
             }
             direccionCorreo.setText(prefs.getString("keyCorreo"," "));
-            unPedido= new Pedido();}
+            unPedido= new Pedido();
 
-        adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
-        listaDetalles.setAdapter(adaptador);
+            adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
+            listaDetalles.setAdapter(adaptador);
+        }
+
+      /*  adaptador= new detallePedidoAdapter(getApplicationContext(),unPedido.getDetalle());
+        listaDetalles.setAdapter(adaptador);*/
 
         radiogrupo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -152,14 +188,18 @@ public class NuevoPedido extends AppCompatActivity {
                         // buscar pedidos no aceptados y aceptarlos utomáticamente
                         //List<Pedido> lista = repositorioPedido.getLista();
                         List<Pedido> lista = pedidoDao.getAll();
+
                         for(Pedido p:lista){
-                            if(p.getEstado().equals(Pedido.Estado.REALIZADO))
+                            if(p.getEstado().equals(Pedido.Estado.REALIZADO)) {
                                 p.setEstado(Pedido.Estado.ACEPTADO);
 
-                            Intent i = new Intent(NuevoPedido.this, EstadoPedidoReciver.class);
-                            i.setAction(EstadoPedidoReciver.ESTADO_ACEPTADO);
-                            i.putExtra("idPedido",p.getId());
-                            sendBroadcast(i);
+                                pedidoDao.update(p);
+                                Intent i = new Intent(NuevoPedido.this, EstadoPedidoReciver.class);
+                                i.setAction(EstadoPedidoReciver.ESTADO_ACEPTADO);
+                                i.putExtra("idPedido",p.getId());
+                                sendBroadcast(i);
+                            }
+
                         }
                         runOnUiThread(new Runnable() {
                             @Override
@@ -172,7 +212,7 @@ public class NuevoPedido extends AppCompatActivity {
                     }
                 };
 
-                Thread unHilo = new Thread(nuevoRun);
+                final Thread unHilo = new Thread(nuevoRun);
                 unHilo.start();
 
                 String[] horaIngresada = edtPedidoHoraEntrega.getText().toString().split(":");
@@ -209,7 +249,18 @@ public class NuevoPedido extends AppCompatActivity {
                     else
                         unPedido.setRetirar(true);
                     //repositorioPedido.guardarPedido(unPedido);  //esto lo agrega al repositorio y le setea el id
-                    pedidoDao.insertAll(unPedido); //esto lo agrega al repositorio y le setea el id
+
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            long idPedido = pedidoDao.insert(unPedido); //esto lo agrega a la BD y le setea el id
+                            for(PedidoDetalle detalle : unPedido.getDetalle()){
+                                detalle.getPedido().setId(idPedido);
+                                pedidoDetalleDao.insertAll(detalle);
+                            }
+                        }
+                    });
+
                     Log.d("ID_PEDIDO",String.valueOf(unPedido.getId()));
                     Intent i = new Intent(NuevoPedido.this, historialPedidos.class);
                     startActivity(i);
@@ -241,13 +292,30 @@ public class NuevoPedido extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if( resultCode== Activity.RESULT_OK){
             if(requestCode==1){
-                int cantidad = Integer.valueOf(data.getExtras().getInt("cantidad"));
-                int idProducto = Integer.valueOf(data.getExtras().getInt("idProducto"));
+                final int cantidad = Integer.valueOf(data.getExtras().getInt("cantidad"));
+                final int idProducto = Integer.valueOf(data.getExtras().getInt("idProducto"));
 
-                PedidoDetalle pedDet = new PedidoDetalle(cantidad,repositorioProducto.buscarPorId(idProducto));
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Producto p = productoDao.getProducto(idProducto);
+                        PedidoDetalle pd = new PedidoDetalle(cantidad, p);
+                        pd.setPedido(unPedido);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adaptador.notifyDataSetChanged();
+                                lblTotalPedido.setText(getString(R.string.totalPedido)+String.valueOf(unPedido.total()));
+                            }
+                        });
+                    }
+                });
+
+                /*PedidoDetalle pedDet = new PedidoDetalle(cantidad,repositorioProducto.buscarPorId(idProducto));
                 pedDet.setPedido(unPedido);
                 adaptador.notifyDataSetChanged();
-                lblTotalPedido.setText(getString(R.string.totalPedido)+String.valueOf(unPedido.total()));
+                lblTotalPedido.setText(getString(R.string.totalPedido)+String.valueOf(unPedido.total()));*/
             }}
     }
 }

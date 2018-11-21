@@ -2,6 +2,7 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02.modelo;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
@@ -20,9 +21,8 @@ public class Pedido {
     public enum Estado { REALIZADO, ACEPTADO, RECHAZADO,EN_PREPARACION,LISTO,ENTREGADO,CANCELADO}
 
     @PrimaryKey (autoGenerate = true)
-    @ColumnInfo (name = "PedidoId")
     @NonNull
-    private Integer id;
+    private long id;
     @ColumnInfo (name = "Fecha")
     @TypeConverters(FechaConverter.class)
     private Date fecha;
@@ -62,10 +62,11 @@ public class Pedido {
         this.retirar = retirar;
     }
 
+
     public Pedido() {
         this.detalle =new ArrayList<>();
     }
-
+    @Ignore
     public Pedido(Date fecha, List<PedidoDetalle> detalle, Estado estado, String direccionEnvio, String mailContacto, Boolean retirar) {
         this();
         this.fecha = fecha;
@@ -75,18 +76,18 @@ public class Pedido {
         this.mailContacto = mailContacto;
         this.retirar = retirar;
     }
-
+    @Ignore
     public Pedido(Date fecha, Estado estado) {
         this();
         this.fecha = fecha;
         this.estado = estado;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -142,4 +143,5 @@ public class Pedido {
         }
         return total;
     }
+
 }

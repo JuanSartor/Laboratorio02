@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -47,7 +48,7 @@ public class lista_prod extends AppCompatActivity {
         edtProdCant = (EditText) findViewById(R.id.edtProdCantidad);
 
         catDao= MyDb.getInstance(this).getCategoriaDao();
-       proDao= MyDb.getInstance(this).getProductoDao();
+        proDao= MyDb.getInstance(this).getProductoDao();
 
         //Habilitar o deshabilitar boton y campo cantidad de acuerdo a punto de llamada
         if (intentExtras.getExtras().getInt("NUEVO_PEDIDO") == 0) {

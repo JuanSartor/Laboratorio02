@@ -50,6 +50,7 @@ public class lista_prod extends AppCompatActivity {
         catDao= MyDb.getInstance(this).getCategoriaDao();
         proDao= MyDb.getInstance(this).getProductoDao();
 
+
         //Habilitar o deshabilitar boton y campo cantidad de acuerdo a punto de llamada
         if (intentExtras.getExtras().getInt("NUEVO_PEDIDO") == 0) {
             btnProdAddPedido.setEnabled(false);

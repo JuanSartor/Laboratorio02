@@ -20,6 +20,7 @@ public class MyDb {
     private ProductoDao daoproducto;
     private PedidoDao pedidoDao;
     private PedidoDetalleDao pedidoDetalleDao;
+
     private  AppBaseDatos db;
 
 
@@ -33,6 +34,7 @@ public class MyDb {
         daoproducto = db.productoDao();
         pedidoDao = db.pedidoDao();
         pedidoDetalleDao = db.pedidoDetalleDao();
+
 
     }
 
@@ -50,6 +52,7 @@ public class MyDb {
     }
 
     public  ProductoDao getProductoDao(){return daoproducto;}
+
     public void SetProductoDao(ProductoDao proDao){this.daoproducto=proDao;}
 
     public PedidoDao getPedidoDao() {
@@ -59,6 +62,7 @@ public class MyDb {
     public void setPedidoDao(PedidoDao pedidoDao) {
         this.pedidoDao = pedidoDao;
     }
+
 
     public PedidoDetalleDao getPedidoDetalleDao() {
         return pedidoDetalleDao;

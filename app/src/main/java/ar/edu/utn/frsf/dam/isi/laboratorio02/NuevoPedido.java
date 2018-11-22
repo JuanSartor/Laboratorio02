@@ -219,7 +219,7 @@ public class NuevoPedido extends AppCompatActivity {
                 GregorianCalendar horas = new GregorianCalendar();
                 int valorHora = Integer.valueOf(horaIngresada[0]);
                 int valorMinuto = Integer.valueOf(horaIngresada[1]);
-                
+
                 if(valorHora<0 || valorHora>23){
                     Toast.makeText(NuevoPedido.this,
                             "La hora ingresada ("+valorHora+") es incorrecta",

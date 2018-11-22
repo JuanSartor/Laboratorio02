@@ -2,6 +2,7 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.icu.util.GregorianCalendar;
@@ -21,6 +22,9 @@ import java.util.List;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.AppBaseDatos;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.CategoriaDao;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDb;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoRepository;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Categoria;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
@@ -36,13 +40,19 @@ public class MainActivity extends AppCompatActivity {
     private Button btnConfiguracion;
     private Button btnCategorias;
     private Button btnGestorProducto;
+    private Button btnGestorBD;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         createNotificationChannel();
-        Log.d("TOKEN!!!", FirebaseInstanceId.getInstance().getToken());
+
+        ;
+
+
+//        Log.d("TOKEN!!!", FirebaseInstanceId.getInstance().getToken());
         btnNuevoPedido = (Button) findViewById(R.id.btnMainNuevoPedido);
         btnNuevoPedido.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,6 +121,21 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
+
+        btnGestorBD=(Button) findViewById(R.id.btnGestorBd);
+        btnGestorBD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(MainActivity.this, GestorBDActivity.class);
+                startActivity(i);
+
+            }
+        });
+
+
+
+
 
     }
 

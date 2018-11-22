@@ -68,7 +68,9 @@
     <string name="hintDescripcion">Describa el Producto</string>
     <string name="hintPrecio">Ingrese el precio</string>
     <string name="btnGestorProducto">Gestionar Producto</string>
-
+    <string name="btnBorrarBD">Gestor BD</string>
+    <string name="tvGest">Gestor Base de Datos</string>
+    <string name="tvGestSel">seleccionar el menu de la toolbar para interactuar</string>
 
 
 </resources>

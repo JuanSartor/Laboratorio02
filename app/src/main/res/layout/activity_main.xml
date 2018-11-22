@@ -58,4 +58,10 @@
         android:layout_height="wrap_content"
         android:text="@string/btnGestorProducto" />
 
+    <Button
+        android:id="@+id/btnGestorBd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnBorrarBD" />
+
 </LinearLayout>

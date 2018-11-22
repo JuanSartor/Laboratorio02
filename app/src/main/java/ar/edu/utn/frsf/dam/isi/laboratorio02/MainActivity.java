@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         ;
 
 
-        Log.d("TOKEN!!!", FirebaseInstanceId.getInstance().getToken());
+//        Log.d("TOKEN!!!", FirebaseInstanceId.getInstance().getToken());
         btnNuevoPedido = (Button) findViewById(R.id.btnMainNuevoPedido);
         btnNuevoPedido.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -164,7 +164,9 @@ public class GestionProductoActivity extends AppCompatActivity{
             public void onClick(View v){
 
 
-                if(flagActualizacion){
+
+                if(!flagActualizacion){
+
 
 
                                        if((idProductoBuscar.getText().length()!=0)&&(nombreProducto.getText().length()!=0)&&(descProducto.getText().length()!=0)&&(precioProducto.getText().length()!=0)&&(cat_seleccionada.getNombre()!=null)){

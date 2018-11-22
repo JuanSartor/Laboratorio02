@@ -3,6 +3,7 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +14,21 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.MyDb;
+import ar.edu.utn.frsf.dam.isi.laboratorio02.dao.PedidoDao;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.Pedido;
 import ar.edu.utn.frsf.dam.isi.laboratorio02.modelo.PedidoDetalle;
 
 public class pedidoAdapter extends ArrayAdapter<Pedido> {
     private Context ctx;
     private List<Pedido> datos;
+    private PedidoDao pedidoDao;
 
     public pedidoAdapter(Context act, List<Pedido> pedidos){
         super(act,0,pedidos);
         this.ctx=act;
         this.datos=pedidos;
+        this.pedidoDao = MyDb.getInstance(act).getPedidoDao();
     }
 
     @Override @NonNull
@@ -104,8 +109,15 @@ public class pedidoAdapter extends ArrayAdapter<Pedido> {
                     {Toast mensaje = Toast.makeText(ctx.getApplicationContext(),
                             "No se puede cancelar este pedido!", Toast.LENGTH_SHORT);
                     mensaje.show();}
-                else
+                else{
                     ped.setEstado(Pedido.Estado.CANCELADO);
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            pedidoDao.update(ped);
+                        }
+                    });
+                }
                 notifyDataSetChanged();
             }
         });

@@ -23,6 +23,9 @@ public interface ProductoDao {
   @Query("SELECT * FROM Productos WHERE cat_id IN (:categoriaId)")
   List<Producto> loadProdByCat (int categoriaId);
 
+  @Query("SELECT * FROM Productos WHERE id = :identificador")
+  Producto getProducto(int identificador);
+
 
 
     @Insert

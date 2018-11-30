@@ -165,7 +165,7 @@ public class GestionProductoActivity extends AppCompatActivity{
 
 
 
-                if(!flagActualizacion){
+                if(flagActualizacion){
 
 
 
@@ -188,6 +188,7 @@ public class GestionProductoActivity extends AppCompatActivity{
                                                                 actualizar_producto.setDescripcion(descProducto.getText().toString());
                                                                 actualizar_producto.setPrecio(Double.valueOf(precioProducto.getText().toString()));
                                                                 actualizar_producto.setCategoria(cat_seleccionada);
+                                                              actualizar_producto.setCatid(cat_seleccionada.getId());
 
                                                                 Runnable r2 = new Runnable() {
                                                                     @Override
@@ -239,6 +240,7 @@ public class GestionProductoActivity extends AppCompatActivity{
                         nuevo_producto.setDescripcion(descProducto.getText().toString());
                         nuevo_producto.setPrecio(Double.valueOf(precioProducto.getText().toString()));
                        nuevo_producto.setCategoria(cat_seleccionada);
+                       nuevo_producto.setCatid(cat_seleccionada.getId());
 
 
                         prodDao.insertAll(nuevo_producto);

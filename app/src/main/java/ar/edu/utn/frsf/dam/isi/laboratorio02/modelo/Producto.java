@@ -3,6 +3,7 @@ package ar.edu.utn.frsf.dam.isi.laboratorio02.modelo;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -10,7 +11,10 @@ import java.util.Objects;
 
 import io.reactivex.annotations.NonNull;
 
-@Entity(tableName = "Productos")
+@Entity(tableName = "Productos",foreignKeys = @ForeignKey(entity = Categoria.class,
+parentColumns = "id",
+childColumns = "cate_id",
+onDelete = ForeignKey.CASCADE))
 public class Producto {
 
     @PrimaryKey(autoGenerate = true)
@@ -28,6 +32,9 @@ public class Producto {
 
    @Embedded(prefix = "cat_")
     private Categoria categoria;
+
+   @ColumnInfo(name="cate_id")
+   private Integer catid;
 
     public Producto() {
     }
@@ -54,6 +61,14 @@ public class Producto {
         this.descripcion = descripcion;
         this.precio = precio;
         this.categoria = categoria;
+    }
+
+    public Integer getCatid() {
+        return catid;
+    }
+
+    public void setCatid(Integer catid) {
+        this.catid = catid;
     }
 
     public Integer getId() {
